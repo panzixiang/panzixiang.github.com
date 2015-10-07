@@ -234,11 +234,11 @@ $$ \mathbf{w}\cdot\mathbf{x} - b=0,\, $$
 through the data such that the margin between the two sides of the hyperplane 
 $$ \tfrac{2}{\|\mathbf{w}\|} $$ is maximized.
 
-<center><img src="/assets/week_2/SVM_margin.PNG" width="70%"></center>
+<center><img src="/assets/week_2/SVM_margin.png" width="70%"></center>
 
 However, in most cases, the datasets that we work with are not linearly separable. The common approach is to use Kernel SVM to transfer the data points from the original feature space to a higher dimensional nonlinear feature space. The goal is to make the data points linearly separable in the new feature space.
 
-<center><img src="/assets/week_2/SVM_kernels.PNG" width="70%"></center>
+<center><img src="/assets/week_2/SVM_kernels.png" width="70%"></center>
 
 
 
