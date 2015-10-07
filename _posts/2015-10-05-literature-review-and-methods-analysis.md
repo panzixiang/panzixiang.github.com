@@ -179,12 +179,23 @@ The regime changing occurs randomly in this model. However, the changing probabi
 * Another option would be to use Expectation Maximization (EM) to maximize the likelihood of historical returns based on the mixture of Gaussian and discrete Markoc Chain:
  * $$X_t$$ is the state of Mean and variance model at time t.
  * $$R_t$$ is the stock return at time t.
+ * The model is characterized by the following parameters:
  <img src="/assets/week_2/eq10.PNG" width="50%" align="middle">
+ 
+ 
  * EM seeks to maximise the posterior Likelihood as below:
  <img src="/assets/week_2/eq11.PNG" width="50%" align="middle">
+ 
+ 
 * We could also use Double HMM which runs the Markov Chain of the economic states separately which gives the model more degrees of freedom.
+* We would then seek the correlation between the change of regimes and our shocks/events.
 
 ### Kalman Filters:
+Similarily to HMM models, the theory of finance is mainly treated in term of stochastic differential equations such as, the value of a stock price S is supposed to follow a diffusion geometrical Wiener process which incorporates a drift function as well as the volatilty of the stock price.
+The Kalman filter (KF) can not be used for this analysis since the functions are nonlinear and the transition density of the state space is non-Gaussian. But with the advent of new estimation methods such as Markov Chain Monte Carlo (MCMC) and Particle filters (PF), exact estimation tools for nonlinear state-space and non-Gaussian random variables became available.
+Unlike a simple moving average hat has a fixed set of windowing parameters, the kalman filter constantly updates the information to produce adaptive filtering on the fly
+
+ <img src="/assets/week_2/kalman.PNG" width="80%" align="middle">
 
 
 ### Support Vector Machines:
