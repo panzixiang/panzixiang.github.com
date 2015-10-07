@@ -56,16 +56,34 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
     - See the feature engineering section for details
 
 
-## Performance Validation
-
-### Binary classification
-The simplest way to validate the performance is to frame the problem as a binary classification problem: whether the price of stock or the rate of foreign exchange will rise or fall on a particular day. The classification error serves as a metric of the accuracy of prediction.
-
-### Mock trading
-Another way to test models is to devise a simple trading strategy and test it against market performance. For example a strategy might be buying stocks if the model probability of the price going up was higher than a certain threshold and shorting them if the model probability of the price going down was higher than a certain threshold.
-
-
 ## Feature representation in GDELT columns: some initial exploration
+
+
+### Feature representation
+
+The paper on using GDELT to analyze Singapore's stock proposed a way to convert the features of the GDELT data from categorical data to numerical data. Their approach is as follows: If a column V has categorical data, first find the set of unique categories d = {d1, d2, …, dk}. Then convert this column into k different columns V_1, V_2, …, V_k with one-hot encoding. The data points from each day is aggregated by summing the one-hot encoded vectors. Note that for continuous variable, the one hot encoding represents different bins that the data falls into. Below is a dummy example of the transformations:
+
+<img src="/assets/week_2/GDELT_Original_Format.png" width="50%" align="middle">
+<img src="/assets/week_2/GDELT_One_Hot_Encoding.png" width="70%" align="middle">
+<img src="/assets/week_2/GDELT_Aggregated_by_Date.png" width="70%" align="middle">
+
+We will use the above feature engineering method to aggregate our data by the day: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. Because this approach will introduce a significant number of dimensions, it is impractical to run this algorithm on all the columns. We will instead focus on a small subset of the columns which are relevant to our purposes:
+
+
+| Column                           | Description  |
+| :--------------------------------|:-------------|
+| Actor1Code, Actor2Code | Identification of actors |
+| EventCode              | Hierarchical CAMEO code for event classification |
+| QuadClass              | Material/Verbal Conflict/Cooperation classification |
+| GoldsteinScale         | Captures the theoretical impact on the stability of a country |
+| NumMentions            | proxy for the impact of the event |
+| AvgTone                | how positive/negative the news article's tone is |
+
+
+This has a few advantages:
+
+- It reduces the number of dimensions we have to consider my aggregating them onto one scale while maintaining information about the event impact, which is what we are ultimately concerned about.
+- We can fine-tune the degree at which each column above "proxy" the output value, such we can make rapid changes at low cost.
 
 
 ### Isomap
@@ -84,24 +102,14 @@ We devise a function that takes the number of mentions of both actors in a row o
 <img src="/assets/isomap.png" width="100%">
 
 
-### Feature representation
+## Performance Validation
 
-The paper on using GDELT to analyze Singapore's stock proposed a way to convert the features of the GDELT data from categorical data to numerical data. Their approach is as follows: If a column V has categorical data, first find the set of unique categories d = {d1, d2, …, dk}. Then convert this column into k different columns V_1, V_2, …, V_k with one-hot encoding. The data points from each day is aggregated by summing the one-hot encoded vectors. Below is a dummy example of the transformations:
+### Binary classification
+The simplest way to validate the performance is to frame the problem as a binary classification problem: whether the price of stock or the rate of foreign exchange will rise or fall on a particular day. The classification error serves as a metric of the accuracy of prediction.
 
-<img src="/assets/week_2/GDELT_Original_Format.png" width="50%" align="middle">
-<img src="/assets/week_2/GDELT_One_Hot_Encoding.png" width="70%" align="middle">
-<img src="/assets/week_2/GDELT_Aggregated_by_Date.png" width="70%" align="middle">
+- The current benchmark for the accuracy for stock/index binary classification is around 65%
 
-We will use the above feature engineering method to aggregate our data by the day: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. Because this approach might introduce a significant number of dimensions, we will focus on a small subset of the columns which are relevant to our purposes:
+### Mock trading
+Another way to test models is to devise a simple trading strategy and test it against market performance. For example a strategy might be buying stocks if the model probability of the price going up was higher than a certain threshold and shorting them if the model probability of the price going down was higher than a certain threshold.
 
-{% highlight mma %}
-
-	NumMentions, NumSources, NumArticles, QuadClass, GoldsteinScale, AvgTone
-
-{% endhighlight %}
-
-This has a few advantages:
-
-- It reduces the number of dimensions we have to consider my aggregating them onto one scale while maintaining information about the event impact, which is what we are ultimately concerned about.
-- We can fine-tune the degree at which each column above "proxy" the output value, such we can make rapid changes at low cost.
-
+- The cumulative return of S&P 500 can be used as a benchmark when evaluating our mock trading strategy
