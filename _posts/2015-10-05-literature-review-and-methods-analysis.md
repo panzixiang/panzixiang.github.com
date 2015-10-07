@@ -13,9 +13,9 @@ We have done some initial exploration about the GDELT dataset, (insert general c
 ## Goal 
 
 We seek to:
-1. Condense the GDELT data columns by removing redundancy and aggregating similar features
-2. Impose a function to change domain from discrete/categorical variables into the real numbers.
-3. Devise a testable method to explore various signals in the financial markets (price, volume and volatility of various stocks, indices and foreign exchange rates)
+	1. Condense the GDELT data columns by removing redundancy and aggregating similar features
+	2. Impose a function to change domain from discrete/categorical variables into the real numbers.
+	3. Devise a testable method to explore various signals in the financial markets (price, volume and volatility of various stocks, indices and foreign exchange rates)
 
 
 ## Literature review
@@ -64,8 +64,7 @@ We are making an initial assumption that the actors and event impact are indepen
 
 We devise a function that takes the number of mentions of both actors in a row of GDELT data table and apply a function (such as the logarithm) to map it to the positive reals. Thus we can construct a graph with vertices being actors and edge distances proportional the "connectedness" (and inversely proportional) to the number of joint mentions of them.This will give us a structure to apply the isomap on and seek a low-dimensional manifold that encompass relationships between actors.
 
-<!--
-![Isomap fig.](/assets/isomap.png){: .center-image }-->
+![Isomap fig.](/assets/isomap.png){: .center-image }
 
 ### Feature representation
 We will use the feature engineering method that was used in the Singapore paper: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. We will focus on a small subset of the columns:
@@ -77,6 +76,6 @@ We will use the feature engineering method that was used in the Singapore paper:
 {% endhighlight %}
 
 This has a few advantages:
-	- It reduces the number of dimensions we have to consider my aggregating them onto one scale while maintaining information about the event impact, which is what we are ultimately concerned about.
-	- We can fine-tune the degree at which each column above "proxy" the output value, such we can make rapid changes at low cost.
+- It reduces the number of dimensions we have to consider my aggregating them onto one scale while maintaining information about the event impact, which is what we are ultimately concerned about.
+- We can fine-tune the degree at which each column above "proxy" the output value, such we can make rapid changes at low cost.
 
