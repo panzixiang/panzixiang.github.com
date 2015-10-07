@@ -165,6 +165,8 @@ $$HQ(p)=\ln{|\Sigma^~(p)|}+\frac{2\ln{\ln{T}}}{T}pn^2$$
 ### Hidden Markov Models:
 Time series can be modeled as a geometric Brownian motion with drift. Especially, in financial engineering field, the stock model, which is also modeled as geometric
 Brownian motion, is widely used for modeling derivatives:
+
+$$\frac{S_{t+1}-S_t}{S_t}=R_t=\mu\Delta T + \sigma Z_{\Delta t} \sim \mathcal{N}(\mu\Delta T, \sigma^2\Delta T)$$
 <img src="/assets/week_2/eq9.PNG" width="50%" align="middle">
 Here, the coefficients of the drift, $$\mu$$ and volatility $$\sigma$$ are constant. However, in a Bear marke (Internet Bubble) or Bull market (obvious economic growth), it is difficult to discern which situation we are in and the mean/variance of the stock will be totally different.
 Therefore, we need to define regions of time as a regime whose mean and variacne are expliclity different from other regions of time. A reg
@@ -180,10 +182,20 @@ The regime changing occurs randomly in this model. However, the changing probabi
  * $$X_t$$ is the state of Mean and variance model at time t.
  * $$R_t$$ is the stock return at time t.
  * The model is characterized by the following parameters:
+
+ $$\pi_i=P(X_0=i)$$
+
+ $$P_{ij}=P(X_t=j|X_{t-1}=i)$$
+
+ $$\mathcal{N}(\mu_X,\sigma^2_{X_t})=P(R_t=r_t|X_t=x_t;\theta)=f_{X_t}(r_t)$$
+
+ $$\theta:=\{\pi_i, P_{ij}, \mu_i, \sigma_i\}$$
  <img src="/assets/week_2/eq10.PNG" width="50%" align="middle">
  
  
  * EM seeks to maximise the posterior Likelihood as below:
+
+ $$\text{max}P\{R_0=r_0,\ldots,R_N=r_N\}$$
  <img src="/assets/week_2/eq11.PNG" width="50%" align="middle">
  
  
