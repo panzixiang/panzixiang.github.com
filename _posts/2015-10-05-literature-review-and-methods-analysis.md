@@ -126,10 +126,6 @@ $$\bf{y}_t=A^{-1}A^*_1\bf{y}_{t-1}+\ldots+A^{-1}A^*_p\bf{y}_{t-p}+\bf{u}_t$$
 Since the contribution of Sims (1980) the interaction between variables and disturbances in VAR models has been best described and interpreted by impluse response functions.
 <img src="/assets/week_2/Impact.PNG" width="100%" align="middle">
 An impulse resonse is when a shock is assigned to one variable of the system and where the propagation of this shock on all the variables of the system s studied over time.
-
-#### Markov Switching VAR: Non-Linear Model for Different Regimes of the economy:
-The Markov-switching vector autoregression (MSVAR) was introduced by Hamilton (1989) and has proved useful in capturing important non-linearities in economic processes.
-
 Impulse response functions are used to describe how the economy reacts over time to exogenous impulses, which economists usually call shocks. Impulse response functions describe the reaction of endogenous macroeconomic variables at the time of the shock and over subsequent points in time.
 The standard method to identify such shocks is through recursive identification where we impose a certain ordering to the variables, hence assuming that all contemporaneous interactions among variables are recursive. This corresponds to a B model allowing for instantaneous effects of the shocks on the variables which can be written as follows:
 
@@ -137,15 +133,27 @@ $$y_t=A^{(0)}_{s_t}+\sum_{i=1}^p A^{(i)}_{s_t}y_{t-i}+B_{s_t}\epsilon_t$$
 
 $$\epsilon_t \sim i.i.\mathcal{N}(0,I_N)$$
 
+#### Markov Switching VAR: Non-Linear Model for Different Regimes of the economy:
+The Markov-switching vector autoregression (MSVAR) was introduced by Hamilton (1989) and has proved useful in capturing important non-linearities in economic processes.
+A regime $$s_t$$ is assumed to follow a hidden m-state Markov-chain. The probability of being in regime j next period conditional on the current regime $$i$$ is assumed exogenous and constant.
+
 Many financial time series processes appear subject to periodic structural changes in their dynamics. Regression relationships are often not robust to outliers nor stable over time, whilst the existence of changes in variance over time is well documented
-A regime $s_t$ is assumed to follow a hidden m-state Markov-chain. The probability of being in regime j next period conditional on the current regime i is assumed exogenous and constant.
+
+
+There has been recent work on deriving impulse responses for Markov-Switching VAR models by taking into account the history of the system (times eries) as well as the type of the shocks impacting it.
+Once those structural shocks are identified. We could seek to find a correlation between them and the vectors of events from GDELT.
+
 
 
 (TODO:more explanation for the change of regimes and how they impact the VAR model)
 
-#### TODO(MCMC Sampling for Regime Switching ):
-A Bayesian Markov Chain Monte Carlo estimation procedure is developed whichgenerates the joint posterior density of the parameters and the regimes, rather than the more common point estimates. The complete likelihood surface is generated at the same time.
- 
+#### Estimating a Markov-Swtiching VAR:
+A Bayesian framework is developed to estimate the relations between the regimes, the time series and the impulse responses.
+A Bayesian Markov Chain Monte Carlo estimation procedure is developed which generates the joint posterior density of the parameters and the regimes, rather than the more common point estimates. The complete likelihood surface is generated at the same time. This can be done with a Gibbs sampler that yield the sampled posterior distributions.
+Having defined Bayesian impluse responses for MSVAR, Model Selection can be done using Kullback-Leiber divergene that uses the marginal density of a given model. This helps with picking Linear vs. Non-Linear models as well as selecting the number of lags.
+Finally, Bayesian estimation, with the possibility of imcorporating the prior, can help cirvumvent the curse of dimenstionality using Bayesian Shrinkage: assignging a low a priori to parameters thought to play a less important role.
+
+Accordingly, Bayesian inference yielding posterior densities instead of point parameters, inference on the likeliness of the responses can immediately be performed from their posteriors. THis is important because nonlinear moels with switching regimes have much richer dynamics than linear ones and the range of possible impulse responses can become large. 
 #### Lag Length Selection: How many days to go back in history
 The lag length for the VAR(p) model may be determined using model selection criteria. The general approach is to fit VAR(p) models with possible values of p which minimizes some model selection critiera such as Akaike (AIC), Schwarz-Bayesian(BIC) and Hannan-Quinn(HQ) based on the size of the features n and the residual  covariance matrix:
 
