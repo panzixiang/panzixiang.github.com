@@ -25,7 +25,7 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 
 <figure>
 	<figcaption>Training and Test Errors for Different SVM Kernels</figcaption>
-	<img src="/assets/week_2/SVM_Kernel.png" width="95%">
+	<img src="/assets/week_2/SVM_kernels.png" width="95%">
 </figure>
 
 
