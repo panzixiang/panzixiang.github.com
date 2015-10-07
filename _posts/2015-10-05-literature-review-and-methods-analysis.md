@@ -134,9 +134,8 @@ Impulse response functions are used to describe how the economy reacts over time
 The standard method to identify such shocks is through recursive identification where we impose a certain ordering to the variables, hence assuming that all contemporaneous interactions among variables are recursive. This corresponds to a B model allowing for instantaneous effects of the shocks on the variables which can be written as follows:
 
 $$y_t=A^{(0)}_{s_t}+\sum_{i=1}^p A^{(i)}_{s_t}y_{t-i}+B_{s_t}\epsilon_t$$
+
 $$\epsilon_t \sim i.i.\mathcal{N}(0,I_N)$$
-<img src="/assets/week_2/eq7.PNG" width="50%" align="middle">
-<img src="/assets/week_2/eq8.PNG" width="20%" align="middle">
 
 Many financial time series processes appear subject to periodic structural changes in their dynamics. Regression relationships are often not robust to outliers nor stable over time, whilst the existence of changes in variance over time is well documented
 A regime $s_t$ is assumed to follow a hidden m-state Markov-chain. The probability of being in regime j next period conditional on the current regime i is assumed exogenous and constant.
@@ -149,6 +148,14 @@ A Bayesian Markov Chain Monte Carlo estimation procedure is developed whichgener
  
 #### Lag Length Selection: How many days to go back in history
 The lag length for the VAR(p) model may be determined using model selection criteria. The general approach is to fit VAR(p) models with possible values of p which minimizes some model selection critiera such as Akaike (AIC), Schwarz-Bayesian(BIC) and Hannan-Quinn(HQ) based on the size of the features n and the residual  covariance matrix:
+
+$$\Sigma^~(p)=T^{-1}\sum^T_{t=1}\hat{\epsilon}_t\hat{\epsilon'}_t$$
+
+$$AIC(p)=\ln{|\Sigma^~(p)|}+\frac{2}{T}pn^2$$
+
+$$BIC(p)=\ln{|\Sigma^~(p)|}+\frac{\ln{T}}{T}pn^2$$
+
+$$HQ(p)=\ln{|\Sigma^~(p)|}+\frac{2\ln{\ln{T}}}{T}pn^2$$
 <img src="/assets/week_2/eq2.PNG" width="30%" align="middle">
 <img src="/assets/week_2/eq3.PNG" width="50%" align="middle">
 
