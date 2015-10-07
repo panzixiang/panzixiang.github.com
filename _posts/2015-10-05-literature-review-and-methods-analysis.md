@@ -132,6 +132,9 @@ The Markov-switching vector autoregression (MSVAR) was introduced by Hamilton (1
 
 Impulse response functions are used to describe how the economy reacts over time to exogenous impulses, which economists usually call shocks. Impulse response functions describe the reaction of endogenous macroeconomic variables at the time of the shock and over subsequent points in time.
 The standard method to identify such shocks is through recursive identification where we impose a certain ordering to the variables, hence assuming that all contemporaneous interactions among variables are recursive. This corresponds to a B model allowing for instantaneous effects of the shocks on the variables which can be written as follows:
+
+$$y_t=A^{(0)}_{s_t}+\displaystyle\sum_{i=1}^p A^{(i)}_{s_t}y_{t-i}+B^_{s_t}\epsilon_t$$
+$$\epsilon_t \sim i.i.\mathcal{N}(0,I_N)$$
 <img src="/assets/week_2/eq7.PNG" width="50%" align="middle">
 <img src="/assets/week_2/eq8.PNG" width="20%" align="middle">
 
