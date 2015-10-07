@@ -64,7 +64,8 @@ We are making an initial assumption that the actors and event impact are indepen
 
 We devise a function that takes the number of mentions of both actors in a row of GDELT data table and apply a function (such as the logarithm) to map it to the positive reals. Thus we can construct a graph with vertices being actors and edge distances proportional the "connectedness" (and inversely proportional) to the number of joint mentions of them.This will give us a structure to apply the isomap on and seek a low-dimensional manifold that encompass relationships between actors.
 
-![Isomap fig.](/assets/isomap.png){: .center-image }
+<!--
+![Isomap fig.](/assets/isomap.png){: .center-image }-->
 
 ### Feature representation
 We will use the feature engineering method that was used in the Singapore paper: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. We will focus on a small subset of the columns:
