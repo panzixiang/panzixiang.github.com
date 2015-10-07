@@ -24,18 +24,12 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 	- Successes/Improvements: The approach using logistic regression with regularization achieved a test error of 36.1%. A SVM with 3rd degree polynomial kernel achieved a test error of 36.0%. An extension to their work would be to predict the change in price as a continuous variable instead of a binary variable. Training a separate model for each sector might also improve the performance.
 
 	Training and Test Errors for Different SVM Kernels
+
 	$$\text{1. Polynomial  } K(\bf{x}_1, \bf{x}_2)=(\bf{x}_1\cdot\bf{x}_2+1)^2$$
 
 	$$\text{2. Gaussian  } K(\bf{x}_1, \bf{x}_2)=\exp(-||\bf{x}_1-\bf{x}_2+1)||^2/2\sigma^2)$$
 
 	$$\text{3. Sigmoid } K(\bf{x}_1, \bf{x}_2)=\tanh(\mathcal{k}(\bf{x}_1\cdot\bf{x}_2)+\alpha)$$
-
-<figure>
-	<figcaption>Training and Test Errors for Different SVM Kernels</figcaption>
-
-	<img src="/assets/week_2/SVM_kernels.png" width="95%">
-</figure>
-
 
 - [Using Structured Events to Predict Stock Price Movement: An Empirical Investigation]( http://emnlp2014.org/papers/pdf/EMNLP2014148.pdf)
 - [Deep Learning for Event-Driven Stock Prediction](http://ijcai.org/papers15/Papers/IJCAI15-329.pdf)
