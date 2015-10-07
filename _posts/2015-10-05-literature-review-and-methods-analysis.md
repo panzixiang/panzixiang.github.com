@@ -23,13 +23,11 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 	- Key concept: The authors tried to predict whether a stock’s price will rise in the day after its earnings announcement has been published. The two sources of data that were used are: historical prices of the stock and its earnings statements. 54 numerical features were extracted from the two sources of data for binary classification.
 	- Successes/Improvements: The approach using logistic regression with regularization achieved a test error of 36.1%. A SVM with 3rd degree polynomial kernel achieved a test error of 36.0%. An extension to their work would be to predict the change in price as a continuous variable instead of a binary variable. Training a separate model for each sector might also improve the performance.
 
-	Training and Test Errors for Different SVM Kernels
+<figure>
+	<center> <figcaption>Training and Test Errors for Different SVM Kernels</figcaption> </center>
+	<img src="/assets/week_2/SVM_stock_performance.png" width="95%">
+</figure>
 
-	$$\text{1. Polynomial  } K(\bf{x}_1, \bf{x}_2)=(\bf{x}_1\cdot\bf{x}_2+1)^2$$
-
-	$$\text{2. Gaussian  } K(\bf{x}_1, \bf{x}_2)=\exp(-||\bf{x}_1-\bf{x}_2+1)||^2/2\sigma^2)$$
-
-	$$\text{3. Sigmoid } K(\bf{x}_1, \bf{x}_2)=\tanh(\mathcal{k}(\bf{x}_1\cdot\bf{x}_2)+\alpha)$$
 
 - [Using Structured Events to Predict Stock Price Movement: An Empirical Investigation]( http://emnlp2014.org/papers/pdf/EMNLP2014148.pdf)
 - [Deep Learning for Event-Driven Stock Prediction](http://ijcai.org/papers15/Papers/IJCAI15-329.pdf)
@@ -221,6 +219,28 @@ The Kalman filter (KF) can not be used for this analysis since the functions are
 Unlike a simple moving average hat has a fixed set of windowing parameters, the kalman filter constantly updates the information to produce adaptive filtering on the fly
 
  <img src="/assets/week_2/kalman.PNG" width="80%" align="middle">
+
+
+
+### Support Vector Machines:
+Support Vector Machines (SVM) are a commonly used method for binary classification. Given n data points in a training set:
+
+$$ \mathcal{D} = \left\{ (\mathbf{x}_i, y_i)\mid\mathbf{x}_i \in \mathbb{R}^p,\, y_i \in \{-1,1\}\right\}_{i=1}^n $$
+
+where $$ \mathbf{x}_i $$ is the i-th data point and $$ y_i $$ is its binary label. The goal is to fit a hyperplane
+
+$$ \mathbf{w}\cdot\mathbf{x} - b=0,\, $$
+
+through the data such that the margin between the two sides of the hyperplane 
+$$ \tfrac{2}{\|\mathbf{w}\|} $$ is maximized.
+
+<center><img src="/assets/week_2/SVM_margin.PNG" width="70%"></center>
+
+However, in most cases, the datasets that we work with are not linearly separable. The common approach is to use Kernel SVM to transfer the data points from the original feature space to a higher dimensional nonlinear feature space. The goal is to make the data points linearly separable in the new feature space.
+
+<center><img src="/assets/week_2/SVM_kernels.PNG" width="70%"></center>
+
+
 
 ## Performance Validation
 
