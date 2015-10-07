@@ -182,7 +182,7 @@ The regime changing occurs randomly in this model. However, the changing probabi
  * The model is characterized by the following parameters:
  <img src="/assets/week_2/eq10.PNG" width="50%" align="middle">
  
- 
+ 
  * EM seeks to maximise the posterior Likelihood as below:
  <img src="/assets/week_2/eq11.PNG" width="50%" align="middle">
  
@@ -195,7 +195,7 @@ Similarily to HMM models, the theory of finance is mainly treated in term of sto
 The Kalman filter (KF) can not be used for this analysis since the functions are nonlinear and the transition density of the state space is non-Gaussian. But with the advent of new estimation methods such as Markov Chain Monte Carlo (MCMC) and Particle filters (PF), exact estimation tools for nonlinear state-space and non-Gaussian random variables became available.
 Unlike a simple moving average hat has a fixed set of windowing parameters, the kalman filter constantly updates the information to produce adaptive filtering on the fly
 
- <img src="/assets/week_2/kalman.PNG" width="150%" align="middle">
+ <img src="/assets/week_2/kalman.PNG" width="100%" align="middle">
 
 ## Performance Validation
 
