@@ -23,7 +23,7 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 - [Stock Prediction Using Event-based Sentiment Analysis](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6690034)
 - [Deep Learning for Event-Driven Stock Prediction](http://ijcai.org/papers15/Papers/IJCAI15-329.pdf)
 	- Key concepts: The Ding et al. deep learning papers use NLP to determine actor pairings along with the connecting action (creating event tuples and later event embeddings) and use various neural network architectures for binary classification.  Generally achieved around 60% classification accuracy, both for individual stocks and indices.
-	
+
 - [Predicting the Present With Google Trends](http://people.ischool.berkeley.edu/~hal/Papers/2011/ptp.pdf) 
 - [Stock Prices, News, and Business Conditions](http://www.nber.org/papers/w3520.pdf)
 - [The Three-Pass Regression Filter](http://faculty.chicagobooth.edu/bryan.kelly/research/pdf/Forecasting_theory.pdf)
@@ -41,4 +41,26 @@ The simplest way to validate the performance is to frame the problem as a binary
 A common way to test models is to devise a simple trading strategy and test it against market performance. For example a strategy might be buying stocks if the model probability of the price going up was higher than a certain threshold and shorting them if the model probability of the price going down was higher than a certain threshold.
 
 
-## Feature representation in GDELT columns - some initial exploration
+## Feature representation in GDELT columns: some initial exploration
+
+### Feature representation
+We will use the feature engineering method that was used in the Singapore paper: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. We will focus on a small subset of the columns:
+{% highlight mma %}
+
+	NumMentions, NumSources, NumArticles, QuadClass, GoldsteinScale, AvgTone, Geo-location, ActorCode.
+
+{% endhighlight %}
+
+### Isomap
+We are making an initial assumption that the actors and event impact are independent, i.e. that the magnitude of the impact of events will be likely the same regardless of who perpetrated that. Thus we can map the two actors of an events onto an isomap with the distance metric being the number of times they were mentioned together: 
+
+> A metric on a set $$X$$ is a function $$ d: X \times X \rightarrow \mathbb{R}$ with the following conditions:
+
+> Non-negativity + coincidence: $$d(x,y)\geq 0$ with equality only at $$d(x,x)$$
+> Symmetry: $$d(x,y)=d(y,x)$$
+> Triangle inequality: $$d(x,z)\leqd(x,y)+d(y,z)$$ 
+
+We devise a function that takes the number of mentions of both actors in a row of GDELT data table and apply a function (such as the logarithm) to map it to the positive reals. Thus we can construct a graph with vertices being actors and edge distances proportional the "connectedness" (and inversely proportional) to the number of joint mentions of them.This will give us a structure to apply the isomap on and seek a low-dimensional manifold that encompass relationships between actors.
+
+For the event impact we seek to aggregate factors such as number of mentions and the degree of cooperation/conflict onto a scale that can be mapped alongside the actors.
+
