@@ -8,8 +8,6 @@ tags: [literature review, data]
 {% include JB/setup %}
 
 
-We have done some initial exploration about the GDELT dataset, (insert general comment here)
-
 ## Goal 
 
 - Condense the GDELT data columns by removing redundancy and aggregating similar 	features
@@ -25,13 +23,20 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 	- Key concept: The authors tried to predict whether a stock’s price will rise in the day after its earnings announcement has been published. The two sources of data that were used are: historical prices of the stock and its earnings statements. 54 numerical features were extracted from the two sources of data for binary classification.
 	- Successes/Improvements: The approach using logistic regression with regularization achieved a test error of 36.1%. A SVM with 3rd degree polynomial kernel achieved a test error of 36.0%. An extension to their work would be to predict the change in price as a continuous variable instead of a binary variable. Training a separate model for each sector might also improve the performance.
 
+<figure>
+	<figcaption>Training and Test Errors for Different SVM Kernels</figcaption>
+	<img src="/assets/week_2/SVM_Kernel.png" width="95%">
+</figure>
+
+
 - [Using Structured Events to Predict Stock Price Movement: An Empirical Investigation]( http://emnlp2014.org/papers/pdf/EMNLP2014148.pdf)
 - [Deep Learning for Event-Driven Stock Prediction](http://ijcai.org/papers15/Papers/IJCAI15-329.pdf)
 	- Key concepts: The Ding et al. deep learning papers use natural language processing along with deep learning to perform binary classification on stocks’ movements. First, a structured representation including the subject, action, object, etc is extracted from news articles from Reuters and Bloomberg into a feature vector. Then, Ding et al. experimented with various neural network architectures in the different papers.
 
+	- Successes/Improvements: Their latest architecture achieved 64% accuracy for the S&P 500 index and 65% accuracy for individual stocks. The strength of this architecture is that its model combines the short-term effects and the long-term effects of news on the market. This architecture is as follows: the aggregated event embeddings for each day serve as input to the NN. Events from the current day are treated as short term events; events from the past week are mid-term events; events from the past month are long-term events. There are separate convolution layers for long-term events and mid-term events. The output layer only has two neurons which predicts whether the stock price will go up or go down.
+
 	<img src="/assets/week_2/Deep_Learning_for_Stocks.png" width="100%">
 
-	- Successes/Improvements: Their latest architecture achieved 64% accuracy for the S&P 500 index and 65% accuracy for individual stocks. The strength of this architecture is that its model combines the short-term effects and the long-term effects of news on the market. This architecture is as follows: the aggregated event embeddings for each day serve as input to the NN. Events from the current day are treated as short term events; events from the past week are mid-term events; events from the past month are long-term events. There are separate convolution layers for long-term events and mid-term events. The output layer only has two neurons which predicts whether the stock price will go up or go down.
 
 - [Stock Prediction Using Event-based Sentiment Analysis](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6690034)
 
@@ -43,18 +48,21 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 
 - [Stock Prices, News, and Business Conditions](http://www.nber.org/papers/w3520.pdf)
 - [The Three-Pass Regression Filter](http://faculty.chicagobooth.edu/bryan.kelly/research/pdf/Forecasting_theory.pdf)
-- [Visual and Predictive Analyticson Singapore News:Experiments on GDELT, Wikipedia, and ˆSTI](http://arxiv.org/pdf/1404.1996v1.pdf)
 - [Isomap](http://wearables.cc.gatech.edu/paper_of_week/isomap.pdf)
 	- Key concepts: 
 		- Isomap inherits from PCA and MDS: a noniterative, polynomial time procedure with a guarantee of global optimality; for intrinsically Euclidean manifolds, a guarantee of asymptotic conver-gence to the true structure.
 		- Isomap is applicable in mapping highly categorical data as long as we have a reasonable metric and paths on a graph/network of events/datapoints.
+- [Visual and Predictive Analyticson Singapore News: Experiments on GDELT, Wikipedia, and ˆSTI](http://arxiv.org/pdf/1404.1996v1.pdf)
+    - See the feature engineering section for details
 
-## Performance Validation: some comments
+
+## Performance Validation
 
 ### Binary classification
 The simplest way to validate the performance is to frame the problem as a binary classification problem: whether the price of stock or the rate of foreign exchange will rise or fall on a particular day. The classification error serves as a metric of the accuracy of prediction.
 
-A common way to test models is to devise a simple trading strategy and test it against market performance. For example a strategy might be buying stocks if the model probability of the price going up was higher than a certain threshold and shorting them if the model probability of the price going down was higher than a certain threshold.
+### Mock trading
+Another way to test models is to devise a simple trading strategy and test it against market performance. For example a strategy might be buying stocks if the model probability of the price going up was higher than a certain threshold and shorting them if the model probability of the price going down was higher than a certain threshold.
 
 
 ## Feature representation in GDELT columns: some initial exploration
@@ -73,10 +81,18 @@ We are making an initial assumption that the actors and event impact are indepen
 
 We devise a function that takes the number of mentions of both actors in a row of GDELT data table and apply a function (such as the logarithm) to map it to the positive reals. Thus we can construct a graph with vertices being actors and edge distances proportional the "connectedness" (and inversely proportional) to the number of joint mentions of them.This will give us a structure to apply the isomap on and seek a low-dimensional manifold that encompass relationships between actors.
 
-![Isomap fig.](/assets/isomap.png){: .center-image }
+<img src="/assets/isomap.png" width="100%">
+
 
 ### Feature representation
-We will use the feature engineering method that was used in the Singapore paper: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. We will focus on a small subset of the columns:
+
+The paper on using GDELT to analyze Singapore's stock proposed a way to convert the features of the GDELT data from categorical data to numerical data. Their approach is as follows: If a column V has categorical data, first find the set of unique categories d = {d1, d2, …, dk}. Then convert this column into k different columns V_1, V_2, …, V_k with one-hot encoding. The data points from each day is aggregated by summing the one-hot encoded vectors. Below is a dummy example of the transformations:
+
+<img src="/assets/week_2/GDELT_Original_Format.png" width="50%" align="middle">
+<img src="/assets/week_2/GDELT_One_Hot_Encoding.png" width="70%" align="middle">
+<img src="/assets/week_2/GDELT_Aggregated_by_Date.png" width="70%" align="middle">
+
+We will use the above feature engineering method to aggregate our data by the day: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. Because this approach might introduce a significant number of dimensions, we will focus on a small subset of the columns which are relevant to our purposes:
 
 {% highlight mma %}
 
