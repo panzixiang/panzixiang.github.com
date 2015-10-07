@@ -10,6 +10,13 @@ tags: [literature review, data]
 
 We have done some initial exploration about the GDELT dataset, (insert general comment here)
 
+## Goal 
+
+We seek to:
+1. Condense the GDELT data columns by removing redundancy and aggregating similar features
+2. Impose a function to change domain from discrete/categorical variables into the real numbers.
+3. Devise a testable method to explore various signals in the financial markets (price, volume and volatility of various stocks, indices and foreign exchange rates)
+
 
 ## Literature review
 
@@ -43,13 +50,6 @@ A common way to test models is to devise a simple trading strategy and test it a
 
 ## Feature representation in GDELT columns: some initial exploration
 
-### Feature representation
-We will use the feature engineering method that was used in the Singapore paper: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. We will focus on a small subset of the columns:
-{% highlight r %}
-
-	NumMentions, NumSources, NumArticles, QuadClass, GoldsteinScale, AvgTone, Geo-location, ActorCode.
-
-{% endhighlight %}
 
 ### Isomap
 We are making an initial assumption that the actors and event impact are independent, i.e. that the magnitude of the impact of events will be likely the same regardless of who perpetrated that. Thus we can map the two actors of an events onto an isomap with the distance metric being the number of times they were mentioned together: 
@@ -57,10 +57,26 @@ We are making an initial assumption that the actors and event impact are indepen
 > A metric on a set $$X$$ is a function $$d: X \times X \rightarrow \mathbb{R}$$ with the following conditions:
 > 
 > Non-negativity + coincidence: $$d(x,y)\geq 0$$ with equality only at $$d(x,x)$$
+>
 > Symmetry: $$d(x,y)=d(y,x)$$
+>
 > Triangle inequality: $$d(x,z)\leq d(x,y)+d(y,z)$$ 
 
 We devise a function that takes the number of mentions of both actors in a row of GDELT data table and apply a function (such as the logarithm) to map it to the positive reals. Thus we can construct a graph with vertices being actors and edge distances proportional the "connectedness" (and inversely proportional) to the number of joint mentions of them.This will give us a structure to apply the isomap on and seek a low-dimensional manifold that encompass relationships between actors.
 
-For the event impact we seek to aggregate factors such as number of mentions and the degree of cooperation/conflict onto a scale that can be mapped alongside the actors.
+![Isomap fig.](/assets/isomap.png){: .center-image }
+
+### Feature representation
+We will use the feature engineering method that was used in the Singapore paper: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. We will focus on a small subset of the columns:
+
+{% highlight  %}
+
+	NumMentions, NumSources, NumArticles, QuadClass, GoldsteinScale, AvgTone
+
+{% endhighlight %}
+
+This has a few advantages:
+	- It reduces the number of dimensions we have to consider my aggregating them onto one scale while maintaining information about the event impact, which is what we are ultimately concerned about.
+	- We can fine-tune the degree at which each column above "proxy" the output value, such we can make rapid changes at low cost.
+	- 
 
