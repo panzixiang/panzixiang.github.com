@@ -70,7 +70,7 @@ We devise a function that takes the number of mentions of both actors in a row o
 ### Feature representation
 We will use the feature engineering method that was used in the Singapore paper: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. We will focus on a small subset of the columns:
 
-{% highlight  %}
+{% highlight mma %}
 
 	NumMentions, NumSources, NumArticles, QuadClass, GoldsteinScale, AvgTone
 
