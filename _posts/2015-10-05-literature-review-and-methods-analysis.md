@@ -108,13 +108,15 @@ VAR models are some of the most flexible and easy to use models for multivariate
 for forecasting.
 Let $$Y_t = (y_1, y_2,...,y_nt)'$$ denote an $$(n \times 1)$$ vector of time series variables. The basic p-lag vector autoregressive model (VAR(p)) has the form:
 
-$$\bf{Y}_t=\bf{c}+\bf{Pi}_1\bf{Y}_{t-1}+\bf{Pi}_2\bf{Y}_{t-2}+\cdots+\bf{Pi}_p\bf{Y}_{t-p}+\epsilon_t, \ \ t=1\ldots T$$
+$$\bf{Y}_t=\bf{c}+\bf{\Pi}_1\bf{Y}_{t-1}+\bf{\Pi}_2\bf{Y}_{t-2}+\cdots+\bf{\Pi}_p\bf{Y}_{t-p}+\epsilon_t, \ \ t=1\ldots T$$
 <img src="/assets/week_2/eq1.PNG" width="50%" align="middle">
 
 where $$\Pi_i$$ are $$(n \times n)$$ matrix and $$\epsilon_t$$ is an $$(n \times 1)$$ unobservable zero mean noise vector process.
 
 #### Exogenous Factors in VAR
 To include the exogenous factors into a VAR model (in this case: a vector constructed from our events database), the VAR form can be extended in the following manner:
+
+$$\bf{Y}_t=\bf{c}+\bf{\Pi}_1\bf{Y}_{t-1}+\bf{\Pi}_2\bf{Y}_{t-2}+\cdots+\bf{\Pi}_p\bf{Y}_{t-p}+\bf{\Phi D}_t+\bf{GX}_t+\epsilon_t$$
 <img src="/assets/week_2/eq4.PNG" width="50%" align="middle">
 
 where $$D_t$$ represents an $$(l \times l)$$ matrix of deterministic components, $$X_t$$ represents an $$(m \times 1)$$ matrix of exogenous variable and $$\Phi$$ and $$G$$ are parameter matrices.
