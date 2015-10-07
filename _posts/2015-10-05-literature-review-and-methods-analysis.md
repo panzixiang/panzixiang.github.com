@@ -179,11 +179,14 @@ The regime changing occurs randomly in this model. However, the changing probabi
 * Another option would be to use Expectation Maximization (EM) to maximize the likelihood of historical returns based on the mixture of Gaussian and discrete Markoc Chain:
  * $$X_t$$ is the state of Mean and variance model at time t.
  * $$R_t$$ is the stock return at time t.
- 
- 
+ * The model is characterized by the following parameters:
  <img src="/assets/week_2/eq10.PNG" width="50%" align="middle">
+ 
+ 
  * EM seeks to maximise the posterior Likelihood as below:
  <img src="/assets/week_2/eq11.PNG" width="50%" align="middle">
+ 
+ 
 * We could also use Double HMM which runs the Markov Chain of the economic states separately which gives the model more degrees of freedom.
 * We would then seek the correlation between the change of regimes and our shocks/events.
 
