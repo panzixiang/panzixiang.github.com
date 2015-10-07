@@ -23,14 +23,15 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 	- Key concept: The authors tried to predict whether a stock’s price will rise in the day after its earnings announcement has been published. The two sources of data that were used are: historical prices of the stock and its earnings statements. 54 numerical features were extracted from the two sources of data for binary classification.
 	- Successes/Improvements: The approach using logistic regression with regularization achieved a test error of 36.1%. A SVM with 3rd degree polynomial kernel achieved a test error of 36.0%. An extension to their work would be to predict the change in price as a continuous variable instead of a binary variable. Training a separate model for each sector might also improve the performance.
 
-<figure>
-	<figcaption>Training and Test Errors for Different SVM Kernels</figcaption>
-
+	Training and Test Errors for Different SVM Kernels
 	$$\text{1. Polynomial} K(\bf(x)_1, \bf(x)_2)=(\bf(x)_1\cdot\bf(x)_2+1)^2$$
 
 	$$\text{2. Gaussian} K(\bf(x)_1, \bf(x)_2)=\exp{-||\bf(x)_1-\bf(x)_2+1)||^2/2\sigma^2}$$
 
 	$$\text{3. Sigmoid} K(\bf(x)_1, \bf(x)_2)=\tanh{\mathcal{k}(\bf(x)_1\cdot\bf(x)_2)=\alpha}$$
+
+<figure>
+	<figcaption>Training and Test Errors for Different SVM Kernels</figcaption>
 
 	<img src="/assets/week_2/SVM_kernels.png" width="95%">
 </figure>
