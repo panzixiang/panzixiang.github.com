@@ -12,7 +12,6 @@ We have done some initial exploration about the GDELT dataset, (insert general c
 
 ## Goal 
 
-We seek to:
 - Condense the GDELT data columns by removing redundancy and aggregating similar 	features
 - Impose a function to change domain from discrete/categorical variables into the real numbers.
 - Devise a testable method to explore various signals in the financial markets (price, volume and volatility of various stocks, indices and foreign exchange rates)
@@ -76,6 +75,7 @@ We will use the feature engineering method that was used in the Singapore paper:
 {% endhighlight %}
 
 This has a few advantages:
+
 - It reduces the number of dimensions we have to consider my aggregating them onto one scale while maintaining information about the event impact, which is what we are ultimately concerned about.
 - We can fine-tune the degree at which each column above "proxy" the output value, such we can make rapid changes at low cost.
 
