@@ -167,10 +167,11 @@ $$BIC(p)=\ln{|\Sigma^~(p)|}+\frac{\ln{T}}{T}pn^2$$
 $$HQ(p)=\ln{|\Sigma^~(p)|}+\frac{2\ln{\ln{T}}}{T}pn^2$$
 
 ### Hidden Markov Models:
+* HMMs can be used to divide the entire time series into different regimes(each characterized by a specific volatility level, for example).
+* The return of the time series is assumed to be modelled by a mixture of probability densiteis and each density corresponds to a hidden state with its mean and variancce.
+* Viterbi algorithm in HMMs can be used to find the state sequence in the time series. We then get the subsets of original time series corresponding to different states.
 
 ### Kalman Filters:
-
-### Estimation:
 
 ## Performance Validation
 
