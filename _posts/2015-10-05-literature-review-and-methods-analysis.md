@@ -106,18 +106,18 @@ We devise a function that takes the number of mentions of both actors in a row o
 ### Vector Autoregressive Models (VAR) on Financial Time Series
 VAR models are some of the most flexible and easy to use models for multivariate time series. It has proven to be especially useful for describing the dynamic behavior of economic and financial time series and
 for forecasting.
-Let $Y_t = (y_1, y_2,...,y_nt)'$ denote an $(n \times 1)$ vector of time series variables. The basic p-lag vector autoregressive model (VAR(p)) has the form:
+Let $$Y_t = (y_1, y_2,...,y_nt)'$$ denote an $$(n \times 1)$$ vector of time series variables. The basic p-lag vector autoregressive model (VAR(p)) has the form:
 
 
 <img src="/assets/week_2/eq1" width="50%" align="middle">
 
-where $\Pi_i$ are $(n \times n)$ matrix and $\epsilon_t$ is an $(n \times 1)$ unobservable zero mean noise vector process.
+where $$\Pi_i$$ are $$(n \times n)$$ matrix and $$\epsilon_t$$ is an $$(n \times 1)$$ unobservable zero mean noise vector process.
 
 #### Exogenous Factors in VAR
 To include the exogenous factors into a VAR model (in this case: a vector constructed from our events database), the VAR form can be extended in the following manner:
 <img src="/assets/week_2/eq4" width="50%" align="middle">
 
-where $D_t$ represents an $(l \times l)$ matrix of deterministic components, $X_t$ represents an $(m \times 1)$ matrix of exogenous variable and $\Phi$ and $G$ are parameter matrices.
+where $$D_t$$ represents an $$(l \times l)$$ matrix of deterministic components, $$X_t$$ represents an $$(m \times 1)$$ matrix of exogenous variable and $$\Phi$$ and $$G$$ are parameter matrices.
 
 #### Global Events as an Impluse Response in VAR
 Since the contribution of Sims (1980) the interaction between variables and disturbances in VAR models has been best described and interpreted by impluse response functions.
