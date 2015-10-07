@@ -108,7 +108,7 @@ VAR models are some of the most flexible and easy to use models for multivariate
 for forecasting.
 Let $$Y_t = (y_1, y_2,...,y_nt)'$$ denote an $$(n \times 1)$$ vector of time series variables. The basic p-lag vector autoregressive model (VAR(p)) has the form:
 
-
+$$\bf{Y}_t=\bf{c}+\bf{Pi}_1\bf{Y}_{t-1}+\bf{Pi}_2\bf{Y}_{t-2}+\cdots+\bf{Pi}_p\bf{Y}_{t-p}+\epsilon_t, \ \ t=1\ldots T$$
 <img src="/assets/week_2/eq1.PNG" width="50%" align="middle">
 
 where $$\Pi_i$$ are $$(n \times n)$$ matrix and $$\epsilon_t$$ is an $$(n \times 1)$$ unobservable zero mean noise vector process.
@@ -148,7 +148,8 @@ The lag length for the VAR(p) model may be determined using model selection crit
 
 ### Hidden Markov Models:
 
-### Kalman Filters
+### Kalman Filters:
+
 ### Estimation:
 
 ## Performance Validation
