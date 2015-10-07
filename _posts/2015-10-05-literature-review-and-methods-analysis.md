@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Week 2 Literature review and methods analysis"
-description: ""
+description: "Some initial explorations"
 category: class-posts
 tags: [literature review, data]
 ---
@@ -15,7 +15,7 @@ tags: [literature review, data]
 - Devise a testable method to explore various signals in the financial markets (price, volume and volatility of various stocks, indices and foreign exchange rates)
 
 
-## Literature review
+## Literature Review
 
 We have reviewed a list of papers that explored methods in dealing with the GDELT dataset as well as some dimensionality reduction models.
 
@@ -56,16 +56,16 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
     - See the feature engineering section for details
 
 
-## Feature representation in GDELT columns: some initial exploration
+## Feature Engineering on GDELT data
 
 
 ### Feature representation
 
 The paper on using GDELT to analyze Singapore's stock proposed a way to convert the features of the GDELT data from categorical data to numerical data. Their approach is as follows: If a column V has categorical data, first find the set of unique categories d = {d1, d2, …, dk}. Then convert this column into k different columns V_1, V_2, …, V_k with one-hot encoding. The data points from each day is aggregated by summing the one-hot encoded vectors. Note that for continuous variable, the one hot encoding represents different bins that the data falls into. Below is a dummy example of the transformations:
 
-<img src="/assets/week_2/GDELT_Original_Format.png" width="50%" align="middle">
-<img src="/assets/week_2/GDELT_One_Hot_Encoding.png" width="70%" align="middle">
-<img src="/assets/week_2/GDELT_Aggregated_by_Date.png" width="70%" align="middle">
+<img src="/assets/week_2/GDELT_Original_Format.png" width="60%" align="middle">
+<img src="/assets/week_2/GDELT_One_Hot_Encoding.png" width="90%" align="middle">
+<img src="/assets/week_2/GDELT_Aggregated_by_Date.png" width="90%" align="middle">
 
 We will use the above feature engineering method to aggregate our data by the day: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. Because this approach will introduce a significant number of dimensions, it is impractical to run this algorithm on all the columns. We will instead focus on a small subset of the columns which are relevant to our purposes:
 
@@ -76,8 +76,8 @@ We will use the above feature engineering method to aggregate our data by the da
 | EventCode              | Hierarchical CAMEO code for event classification |
 | QuadClass              | Material/Verbal Conflict/Cooperation classification |
 | GoldsteinScale         | Captures the theoretical impact on the stability of a country |
-| NumMentions            | proxy for the impact of the event |
-| AvgTone                | how positive/negative the news article's tone is |
+| NumMentions            | Proxy for the impact of the event |
+| AvgTone                | How positive/negative the news article's tone is |
 
 
 This has a few advantages:
@@ -154,18 +154,17 @@ Having defined Bayesian impluse responses for MSVAR, Model Selection can be done
 Finally, Bayesian estimation, with the possibility of imcorporating the prior, can help cirvumvent the curse of dimenstionality using Bayesian Shrinkage: assignging a low a priori to parameters thought to play a less important role.
 
 Accordingly, Bayesian inference yielding posterior densities instead of point parameters, inference on the likeliness of the responses can immediately be performed from their posteriors. THis is important because nonlinear moels with switching regimes have much richer dynamics than linear ones and the range of possible impulse responses can become large. 
+
 #### Lag Length Selection: How many days to go back in history
 The lag length for the VAR(p) model may be determined using model selection criteria. The general approach is to fit VAR(p) models with possible values of p which minimizes some model selection critiera such as Akaike (AIC), Schwarz-Bayesian(BIC) and Hannan-Quinn(HQ) based on the size of the features n and the residual  covariance matrix:
 
-$$\Sigma^~(p)=T^{-1}\sum^T_{t=1}\hat{\epsilon}_t\hat{\epsilon'}_t$$
+$$\Sigma^~(p)=T^{-1}\sum^T_{t=1}\hat{\epsilon}_t\hat{\epsilon}'_t$$
 
 $$AIC(p)=\ln{|\Sigma^~(p)|}+\frac{2}{T}pn^2$$
 
 $$BIC(p)=\ln{|\Sigma^~(p)|}+\frac{\ln{T}}{T}pn^2$$
 
 $$HQ(p)=\ln{|\Sigma^~(p)|}+\frac{2\ln{\ln{T}}}{T}pn^2$$
-<img src="/assets/week_2/eq2.PNG" width="30%" align="middle">
-<img src="/assets/week_2/eq3.PNG" width="50%" align="middle">
 
 ### Hidden Markov Models:
 
