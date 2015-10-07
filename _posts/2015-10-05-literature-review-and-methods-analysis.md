@@ -85,6 +85,20 @@ This has a few advantages:
 - It reduces the number of dimensions we have to consider my aggregating them onto one scale while maintaining information about the event impact, which is what we are ultimately concerned about.
 - We can fine-tune the degree at which each column above "proxy" the output value, such we can make rapid changes at low cost.
 
+### Principal Component Analysis
+
+After converting the features from categorical data into numerical data, we can run PCA to reduce the dimensionality of the data and to keep the most important components. The intuitions behind PCA are:
+- To find the directions of maximum variance of the original data
+- To find the directions that induce minimum reconstruction error
+
+These two goals are equivalent. The principal components can be shown to be the eigenvectors of the covariance matrix:
+
+<center><img src="/assets/week_2/PCA.png" width="50%"></center>
+
+where the columns of $$ U $$ denotes the principal components and the diagonal entries of $$ \Lambda $$ denotes the variance captured by each principal component. Then, to project the original data $$ X_i $$ onto the first M principal components, we can use the following equation to get a lower dimensional representation:
+
+<center><img src="/assets/week_2/PCA_projection.png" width="25%"></center>
+
 
 ### Isomap
 We are making an initial assumption that the actors and event impact are independent, i.e. that the magnitude of the impact of events will be likely the same regardless of who perpetrated that. Thus we can map the two actors of an events onto an isomap with the distance metric being the number of times they were mentioned together: 
