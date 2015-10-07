@@ -78,5 +78,4 @@ We will use the feature engineering method that was used in the Singapore paper:
 This has a few advantages:
 	- It reduces the number of dimensions we have to consider my aggregating them onto one scale while maintaining information about the event impact, which is what we are ultimately concerned about.
 	- We can fine-tune the degree at which each column above "proxy" the output value, such we can make rapid changes at low cost.
-	- 
 
