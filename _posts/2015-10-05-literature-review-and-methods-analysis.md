@@ -157,7 +157,6 @@ $$BIC(p)=\ln{|\Sigma^~(p)|}+\frac{\ln{T}}{T}pn^2$$
 
 $$HQ(p)=\ln{|\Sigma^~(p)|}+\frac{2\ln{\ln{T}}}{T}pn^2$$
 
-
 ### Hidden Markov Models:
 
 ### Kalman Filters:
