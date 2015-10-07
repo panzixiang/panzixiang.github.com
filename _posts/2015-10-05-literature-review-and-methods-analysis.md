@@ -65,9 +65,9 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 
 The paper on using GDELT to analyze Singapore's stock proposed a way to convert the features of the GDELT data from categorical data to numerical data. Their approach is as follows: If a column V has categorical data, first find the set of unique categories d = {d1, d2, …, dk}. Then convert this column into k different columns V_1, V_2, …, V_k with one-hot encoding. The data points from each day is aggregated by summing the one-hot encoded vectors. Note that for continuous variable, the one hot encoding represents different bins that the data falls into. Below is a dummy example of the transformations:
 
-<img src="/assets/week_2/GDELT_Original_Format.png" width="60%" align="middle">
-<img src="/assets/week_2/GDELT_One_Hot_Encoding.png" width="90%" align="middle">
-<img src="/assets/week_2/GDELT_Aggregated_by_Date.png" width="90%" align="middle">
+<center><img src="/assets/week_2/GDELT_Original_Format.png" width="60%"></center>
+<center><img src="/assets/week_2/GDELT_One_Hot_Encoding.png" width="90%"></center>
+<center><img src="/assets/week_2/GDELT_Aggregated_by_Date.png" width="90%"></center>
 
 We will use the above feature engineering method to aggregate our data by the day: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. Because this approach will introduce a significant number of dimensions, it is impractical to run this algorithm on all the columns. We will instead focus on a small subset of the columns which are relevant to our purposes:
 
