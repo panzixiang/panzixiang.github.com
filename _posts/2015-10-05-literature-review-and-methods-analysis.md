@@ -126,6 +126,17 @@ $$\bf{Y}_t=\bf{c}+\bf{\Pi}_1\bf{Y}_{t-1}+\bf{\Pi}_2\bf{Y}_{t-2}+\cdots+\bf{\Pi}_
 
 where $$\Pi_i$$ are $$(n \times n)$$ matrix and $$\epsilon_t$$ is an $$(n \times 1)$$ unobservable zero mean noise vector process.
 
+#### Lag Length Selection: How many days to go back in history
+The lag length for the VAR(p) model may be determined using model selection criteria. The general approach is to fit VAR(p) models with possible values of p which minimizes some model selection critiera such as Akaike (AIC), Schwarz-Bayesian(BIC) and Hannan-Quinn(HQ) based on the size of the features n and the residual  covariance matrix:
+
+$$\Sigma^~(p)=T^{-1}\sum^T_{t=1}\hat{\epsilon}_t\hat{\epsilon}'_t$$
+
+$$AIC(p)=\ln{|\Sigma^~(p)|}+\frac{2}{T}pn^2$$
+
+$$BIC(p)=\ln{|\Sigma^~(p)|}+\frac{\ln{T}}{T}pn^2$$
+
+$$HQ(p)=\ln{|\Sigma^~(p)|}+\frac{2\ln{\ln{T}}}{T}pn^2$$
+
 #### Exogenous Factors in VAR
 To include the exogenous factors into a VAR model (in this case: a vector constructed from our events database), the VAR form can be extended in the following manner:
 
@@ -164,17 +175,6 @@ Having defined Bayesian impluse responses for MSVAR, Model Selection can be done
 Finally, Bayesian estimation, with the possibility of imcorporating the prior, can help cirvumvent the curse of dimenstionality using Bayesian Shrinkage: assignging a low a priori to parameters thought to play a less important role.
 
 Accordingly, Bayesian inference yielding posterior densities instead of point parameters, inference on the likeliness of the responses can immediately be performed from their posteriors. THis is important because nonlinear moels with switching regimes have much richer dynamics than linear ones and the range of possible impulse responses can become large. 
-
-#### Lag Length Selection: How many days to go back in history
-The lag length for the VAR(p) model may be determined using model selection criteria. The general approach is to fit VAR(p) models with possible values of p which minimizes some model selection critiera such as Akaike (AIC), Schwarz-Bayesian(BIC) and Hannan-Quinn(HQ) based on the size of the features n and the residual  covariance matrix:
-
-$$\Sigma^~(p)=T^{-1}\sum^T_{t=1}\hat{\epsilon}_t\hat{\epsilon}'_t$$
-
-$$AIC(p)=\ln{|\Sigma^~(p)|}+\frac{2}{T}pn^2$$
-
-$$BIC(p)=\ln{|\Sigma^~(p)|}+\frac{\ln{T}}{T}pn^2$$
-
-$$HQ(p)=\ln{|\Sigma^~(p)|}+\frac{2\ln{\ln{T}}}{T}pn^2$$
 
 ### Hidden Markov Models:
 Time series can be modeled as a geometric Brownian motion with drift. Especially, in financial engineering field, the stock model, which is also modeled as geometric
