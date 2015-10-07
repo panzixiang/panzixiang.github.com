@@ -182,7 +182,7 @@ The regime changing occurs randomly in this model. However, the changing probabi
  * The model is characterized by the following parameters:
  <img src="/assets/week_2/eq10.PNG" width="50%" align="middle">
  
- 
+ 
  * EM seeks to maximise the posterior Likelihood as below:
  <img src="/assets/week_2/eq11.PNG" width="50%" align="middle">
  
