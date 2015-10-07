@@ -54,9 +54,9 @@ We will use the feature engineering method that was used in the Singapore paper:
 ### Isomap
 We are making an initial assumption that the actors and event impact are independent, i.e. that the magnitude of the impact of events will be likely the same regardless of who perpetrated that. Thus we can map the two actors of an events onto an isomap with the distance metric being the number of times they were mentioned together: 
 
-A metric on a set $$X$$ is a function $$ d: X \times X \rightarrow \mathbb{R}$ with the following conditions:
+A metric on a set $$X$$ is a function $$ d: X \times X \rightarrow \mathbb{R}$$ with the following conditions:
 
-Non-negativity + coincidence: $$d(x,y)\geq 0$ with equality only at $$d(x,x)$$
+Non-negativity + coincidence: $$d(x,y)\geq 0$$ with equality only at $$d(x,x)$$
 Symmetry: $$d(x,y)=d(y,x)$$
 Triangle inequality: $$d(x,z)\leqd(x,y)+d(y,z)$$ 
 
