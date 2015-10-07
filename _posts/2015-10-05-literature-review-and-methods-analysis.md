@@ -23,11 +23,13 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 	- Key concept: The authors tried to predict whether a stock’s price will rise in the day after its earnings announcement has been published. The two sources of data that were used are: historical prices of the stock and its earnings statements. 54 numerical features were extracted from the two sources of data for binary classification.
 	- Successes/Improvements: The approach using logistic regression with regularization achieved a test error of 36.1%. A SVM with 3rd degree polynomial kernel achieved a test error of 36.0%. An extension to their work would be to predict the change in price as a continuous variable instead of a binary variable. Training a separate model for each sector might also improve the performance.
 
-<figure>
-	<figcaption>Training and Test Errors for Different SVM Kernels</figcaption>
-	<center><img src="/assets/week_2/SVM_stock_performance.png" width="95%"></center>
-</figure>
+	Training and Test Errors for Different SVM Kernels
 
+	$$\text{1. Polynomial  } K(\bf{x}_1, \bf{x}_2)=(\bf{x}_1\cdot\bf{x}_2+1)^2$$
+
+	$$\text{2. Gaussian  } K(\bf{x}_1, \bf{x}_2)=\exp(-||\bf{x}_1-\bf{x}_2+1)||^2/2\sigma^2)$$
+
+	$$\text{3. Sigmoid } K(\bf{x}_1, \bf{x}_2)=\tanh(\mathcal{k}(\bf{x}_1\cdot\bf{x}_2)+\alpha)$$
 
 - [Using Structured Events to Predict Stock Price Movement: An Empirical Investigation]( http://emnlp2014.org/papers/pdf/EMNLP2014148.pdf)
 - [Deep Learning for Event-Driven Stock Prediction](http://ijcai.org/papers15/Papers/IJCAI15-329.pdf)
@@ -63,9 +65,9 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 
 The paper on using GDELT to analyze Singapore's stock proposed a way to convert the features of the GDELT data from categorical data to numerical data. Their approach is as follows: If a column V has categorical data, first find the set of unique categories d = {d1, d2, …, dk}. Then convert this column into k different columns V_1, V_2, …, V_k with one-hot encoding. The data points from each day is aggregated by summing the one-hot encoded vectors. Note that for continuous variable, the one hot encoding represents different bins that the data falls into. Below is a dummy example of the transformations:
 
-<center><img src="/assets/week_2/GDELT_Original_Format.png" width="60%"></center>
-<center><img src="/assets/week_2/GDELT_One_Hot_Encoding.png" width="90%"></center>
-<center><img src="/assets/week_2/GDELT_Aggregated_by_Date.png" width="90%"></center>
+<img src="/assets/week_2/GDELT_Original_Format.png" width="60%" align="middle">
+<img src="/assets/week_2/GDELT_One_Hot_Encoding.png" width="90%" align="middle">
+<img src="/assets/week_2/GDELT_Aggregated_by_Date.png" width="90%" align="middle">
 
 We will use the above feature engineering method to aggregate our data by the day: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. Because this approach will introduce a significant number of dimensions, it is impractical to run this algorithm on all the columns. We will instead focus on a small subset of the columns which are relevant to our purposes:
 
@@ -76,7 +78,7 @@ We will use the above feature engineering method to aggregate our data by the da
 | EventCode              | Hierarchical CAMEO code for event classification |
 | QuadClass              | Material/Verbal Conflict/Cooperation classification |
 | GoldsteinScale         | Captures the theoretical impact on the stability of a country |
-| NumArticles            | Proxy for the impact of the event |
+| NumMentions            | Proxy for the impact of the event |
 | AvgTone                | How positive/negative the news article's tone is |
 
 
@@ -138,7 +140,7 @@ $$\bf{y}_t=A^{-1}A^*_1\bf{y}_{t-1}+\ldots+A^{-1}A^*_p\bf{y}_{t-p}+\bf{u}_t$$
 
 #### Identifying Exogenous Events as an Impluse Response in VAR
 Since the contribution of Sims (1980) the interaction between variables and disturbances in VAR models has been best described and interpreted by impluse response functions.
-<center><img src="/assets/week_2/Impact.PNG" width="100%"></center>
+<img src="/assets/week_2/Impact.PNG" width="100%" align="middle">
 An impulse resonse is when a shock is assigned to one variable of the system and where the propagation of this shock on all the variables of the system s studied over time.
 Impulse response functions are used to describe how the economy reacts over time to exogenous impulses, which economists usually call shocks. Impulse response functions describe the reaction of endogenous macroeconomic variables at the time of the shock and over subsequent points in time.
 The standard method to identify such shocks is through recursive identification where we impose a certain ordering to the variables, hence assuming that all contemporaneous interactions among variables are recursive. This corresponds to a B model allowing for instantaneous effects of the shocks on the variables which can be written as follows:
@@ -179,7 +181,9 @@ $$HQ(p)=\ln{|\Sigma^~(p)|}+\frac{2\ln{\ln{T}}}{T}pn^2$$
 ### Hidden Markov Models:
 Time series can be modeled as a geometric Brownian motion with drift. Especially, in financial engineering field, the stock model, which is also modeled as geometric
 Brownian motion, is widely used for modeling derivatives:
-<center><img src="/assets/week_2/eq9.PNG" width="50%"></center>
+
+$$\frac{S_{t+1}-S_t}{S_t}=R_t=\mu\Delta T + \sigma Z_{\Delta t} \sim \mathcal{N}(\mu\Delta T, \sigma^2\Delta T)$$
+
 Here, the coefficients of the drift, $$\mu$$ and volatility $$\sigma$$ are constant. However, in a Bear marke (Internet Bubble) or Bull market (obvious economic growth), it is difficult to discern which situation we are in and the mean/variance of the stock will be totally different.
 Therefore, we need to define regions of time as a regime whose mean and variacne are expliclity different from other regions of time. A reg
 
@@ -194,12 +198,19 @@ The regime changing occurs randomly in this model. However, the changing probabi
  * $$X_t$$ is the state of Mean and variance model at time t.
  * $$R_t$$ is the stock return at time t.
  * The model is characterized by the following parameters:
- <center><img src="/assets/week_2/eq10.PNG" width="50%"></center>
- 
+
+ $$\pi_i=P(X_0=i)$$
+
+ $$P_{ij}=P(X_t=j|X_{t-1}=i)$$
+
+ $$\mathcal{N}(\mu_X,\sigma^2_{X_t})=P(R_t=r_t|X_t=x_t;\theta)=f_{X_t}(r_t)$$
+
+ $$\theta:=\{\pi_i, P_{ij}, \mu_i, \sigma_i\}$$ 
  
  * EM seeks to maximise the posterior Likelihood as below:
- <center><img src="/assets/week_2/eq11.PNG" width="50%"></center>
- 
+
+ $$\text{max}P\{R_0=r_0,\ldots,R_N=r_N\}$$
+
  
 * We could also use Double HMM which runs the Markov Chain of the economic states separately which gives the model more degrees of freedom.
 * We would then seek the correlation between the change of regimes and our shocks/events.
@@ -209,27 +220,7 @@ Similarily to HMM models, the theory of finance is mainly treated in term of sto
 The Kalman filter (KF) can not be used for this analysis since the functions are nonlinear and the transition density of the state space is non-Gaussian. But with the advent of new estimation methods such as Markov Chain Monte Carlo (MCMC) and Particle filters (PF), exact estimation tools for nonlinear state-space and non-Gaussian random variables became available.
 Unlike a simple moving average hat has a fixed set of windowing parameters, the kalman filter constantly updates the information to produce adaptive filtering on the fly
 
- <center><img src="/assets/week_2/kalman.PNG" width="80%"></center>
-
-
-### Support Vector Machines:
-Support Vector Machines (SVM) are a commonly used method for binary classification. Given n data points in a training set:
-
-$$ \mathcal{D} = \left\{ (\mathbf{x}_i, y_i)\mid\mathbf{x}_i \in \mathbb{R}^p,\, y_i \in \{-1,1\}\right\}_{i=1}^n $$
-
-where $$ \mathbf{x}_i $$ is the i-th data point and $$ y_i $$ is its binary label. The goal is to fit a hyperplane
-
-$$ \mathbf{w}\cdot\mathbf{x} - b=0,\, $$
-
-through the data such that the margin between the two sides of the hyperplane 
-$$ \tfrac{2}{\|\mathbf{w}\|} $$ is maximized.
-
-<center><img src="/assets/week_2/SVM_margin.png" width="60%"></center>
-
-However, in most cases, the datasets that we work with are not linearly separable. The common approach is to use Kernel SVM to transfer the data points from the original feature space to a higher dimensional nonlinear feature space. The goal is to make the data points linearly separable in the new feature space. The following kernel functions are the most commonly used kernels for SVM's:
-
-<center><img src="/assets/week_2/SVM_kernels.png" width="60%"></center>
-
+ <img src="/assets/week_2/kalman.PNG" width="80%" align="middle">
 
 ## Performance Validation
 
