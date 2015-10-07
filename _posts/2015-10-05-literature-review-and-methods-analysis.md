@@ -76,7 +76,7 @@ We will use the above feature engineering method to aggregate our data by the da
 | EventCode              | Hierarchical CAMEO code for event classification |
 | QuadClass              | Material/Verbal Conflict/Cooperation classification |
 | GoldsteinScale         | Captures the theoretical impact on the stability of a country |
-| NumMentions            | Proxy for the impact of the event |
+| NumArticles            | Proxy for the impact of the event |
 | AvgTone                | How positive/negative the news article's tone is |
 
 
@@ -124,7 +124,7 @@ $$\bf{y}_t=A^{-1}A^*_1\bf{y}_{t-1}+\ldots+A^{-1}A^*_p\bf{y}_{t-p}+\bf{u}_t$$
 
 #### Identifying Exogenous Events as an Impluse Response in VAR
 Since the contribution of Sims (1980) the interaction between variables and disturbances in VAR models has been best described and interpreted by impluse response functions.
-<img src="/assets/week_2/Impact.PNG" width="100%" align="middle">
+<center><img src="/assets/week_2/Impact.PNG" width="100%"></center>
 An impulse resonse is when a shock is assigned to one variable of the system and where the propagation of this shock on all the variables of the system s studied over time.
 Impulse response functions are used to describe how the economy reacts over time to exogenous impulses, which economists usually call shocks. Impulse response functions describe the reaction of endogenous macroeconomic variables at the time of the shock and over subsequent points in time.
 The standard method to identify such shocks is through recursive identification where we impose a certain ordering to the variables, hence assuming that all contemporaneous interactions among variables are recursive. This corresponds to a B model allowing for instantaneous effects of the shocks on the variables which can be written as follows:
@@ -165,7 +165,7 @@ $$HQ(p)=\ln{|\Sigma^~(p)|}+\frac{2\ln{\ln{T}}}{T}pn^2$$
 ### Hidden Markov Models:
 Time series can be modeled as a geometric Brownian motion with drift. Especially, in financial engineering field, the stock model, which is also modeled as geometric
 Brownian motion, is widely used for modeling derivatives:
-<img src="/assets/week_2/eq9.PNG" width="50%" align="middle">
+<center><img src="/assets/week_2/eq9.PNG" width="50%"></center>
 Here, the coefficients of the drift, $$\mu$$ and volatility $$\sigma$$ are constant. However, in a Bear marke (Internet Bubble) or Bull market (obvious economic growth), it is difficult to discern which situation we are in and the mean/variance of the stock will be totally different.
 Therefore, we need to define regions of time as a regime whose mean and variacne are expliclity different from other regions of time. A reg
 
@@ -180,11 +180,11 @@ The regime changing occurs randomly in this model. However, the changing probabi
  * $$X_t$$ is the state of Mean and variance model at time t.
  * $$R_t$$ is the stock return at time t.
  * The model is characterized by the following parameters:
- <img src="/assets/week_2/eq10.PNG" width="50%" align="middle">
+ <center><img src="/assets/week_2/eq10.PNG" width="50%"></center>
  
  
  * EM seeks to maximise the posterior Likelihood as below:
- <img src="/assets/week_2/eq11.PNG" width="50%" align="middle">
+ <center><img src="/assets/week_2/eq11.PNG" width="50%"></center>
  
  
 * We could also use Double HMM which runs the Markov Chain of the economic states separately which gives the model more degrees of freedom.
@@ -195,7 +195,7 @@ Similarily to HMM models, the theory of finance is mainly treated in term of sto
 The Kalman filter (KF) can not be used for this analysis since the functions are nonlinear and the transition density of the state space is non-Gaussian. But with the advent of new estimation methods such as Markov Chain Monte Carlo (MCMC) and Particle filters (PF), exact estimation tools for nonlinear state-space and non-Gaussian random variables became available.
 Unlike a simple moving average hat has a fixed set of windowing parameters, the kalman filter constantly updates the information to produce adaptive filtering on the fly
 
- <img src="/assets/week_2/kalman.PNG" width="80%" align="middle">
+ <center><img src="/assets/week_2/kalman.PNG" width="80%"></center>
 
 
 ### Support Vector Machines:
@@ -210,11 +210,11 @@ $$ \mathbf{w}\cdot\mathbf{x} - b=0,\, $$
 through the data such that the margin between the two sides of the hyperplane 
 $$ \tfrac{2}{\|\mathbf{w}\|} $$ is maximized.
 
-<center><img src="/assets/week_2/SVM_margin.PNG" width="70%"></center>
+<center><img src="/assets/week_2/SVM_margin.PNG" width="60%"></center>
 
-However, in most cases, the datasets that we work with are not linearly separable. The common approach is to use Kernel SVM to transfer the data points from the original feature space to a higher dimensional nonlinear feature space. The goal is to make the data points linearly separable in the new feature space.
+However, in most cases, the datasets that we work with are not linearly separable. The common approach is to use Kernel SVM to transfer the data points from the original feature space to a higher dimensional nonlinear feature space. The goal is to make the data points linearly separable in the new feature space. The following kernel functions are the most commonly used kernels for SVM's:
 
-<center><img src="/assets/week_2/SVM_kernels.PNG" width="70%"></center>
+<center><img src="/assets/week_2/SVM_kernels.PNG" width="60%"></center>
 
 
 ## Performance Validation
