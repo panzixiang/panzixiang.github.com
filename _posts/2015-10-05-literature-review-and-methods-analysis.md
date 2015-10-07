@@ -143,10 +143,6 @@ Many financial time series processes appear subject to periodic structural chang
 There has been recent work on deriving impulse responses for Markov-Switching VAR models by taking into account the history of the system (times eries) as well as the type of the shocks impacting it.
 Once those structural shocks are identified. We could seek to find a correlation between them and the vectors of events from GDELT.
 
-
-
-(TODO:more explanation for the change of regimes and how they impact the VAR model)
-
 #### Estimating a Markov-Swtiching VAR:
 A Bayesian framework is developed to estimate the relations between the regimes, the time series and the impulse responses.
 A Bayesian Markov Chain Monte Carlo estimation procedure is developed which generates the joint posterior density of the parameters and the regimes, rather than the more common point estimates. The complete likelihood surface is generated at the same time. This can be done with a Gibbs sampler that yield the sampled posterior distributions.
@@ -167,9 +163,26 @@ $$BIC(p)=\ln{|\Sigma^~(p)|}+\frac{\ln{T}}{T}pn^2$$
 $$HQ(p)=\ln{|\Sigma^~(p)|}+\frac{2\ln{\ln{T}}}{T}pn^2$$
 
 ### Hidden Markov Models:
+Time series can be modeled as a geometric Brownian motion with drift. Especially, in financial engineering field, the stock model, which is also modeled as geometric
+Brownian motion, is widely used for modeling derivatives:
+<img src="/assets/week_2/eq9.PNG" width="50%" align="middle">
+Here, the coefficients of the drift, $$\mu$$ and volatility $$\sigma$$ are constant. However, in a Bear marke (Internet Bubble) or Bull market (obvious economic growth), it is difficult to discern which situation we are in and the mean/variance of the stock will be totally different.
+Therefore, we need to define regions of time as a regime whose mean and variacne are expliclity different from other regions of time. A reg
+
+Sotck returns series would then be modelled as a mixture of Gaussian distribution and discrete Markov chain. In a certain regime, stock series follow geometric Brownian motion with drift, which means stock returns have Gaussian distribution and the regimes are changing by the discrete Markov Process.
+For example, while, in good economic situation, stock return has higher mean and smaller variance, it has lower mean and larger variance in bad economic situation. In this case, we have two economic states, i.e. good and bad, and each state has different mean and variance.
+The regime changing occurs randomly in this model. However, the changing probability is fixed and consistent thought the stock return series.
+
 * HMMs can be used to divide the entire time series into different regimes(each characterized by a specific volatility level, for example).
 * The return of the time series is assumed to be modelled by a mixture of probability densiteis and each density corresponds to a hidden state with its mean and variancce.
 * Viterbi algorithm in HMMs can be used to find the state sequence in the time series. We then get the subsets of original time series corresponding to different states.
+* Another option would be to use Expectation Maximization (EM) to maximize the likelihood of historical returns based on the mixture of Gaussian and discrete Markoc Chain:
+ * $$X_t$$ is the state of Mean and variance model at time t.
+ * $$R_t$$ is the stock return at time t.
+ <img src="/assets/week_2/eq10.PNG" width="50%" align="middle">
+ * EM seeks to maximise the posterior Likelihood as below:
+ <img src="/assets/week_2/eq11.PNG" width="50%" align="middle">
+* We could also use Double HMM which runs the Markov Chain of the economic states separately which gives the model more degrees of freedom.
 
 ### Kalman Filters:
 
