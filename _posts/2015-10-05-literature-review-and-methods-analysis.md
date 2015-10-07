@@ -13,9 +13,9 @@ We have done some initial exploration about the GDELT dataset, (insert general c
 ## Goal 
 
 We seek to:
-1. Condense the GDELT data columns by removing redundancy and aggregating similar 	features
-2. Impose a function to change domain from discrete/categorical variables into the real numbers.
-3. Devise a testable method to explore various signals in the financial markets (price, volume and volatility of various stocks, indices and foreign exchange rates)
+- Condense the GDELT data columns by removing redundancy and aggregating similar 	features
+- Impose a function to change domain from discrete/categorical variables into the real numbers.
+- Devise a testable method to explore various signals in the financial markets (price, volume and volatility of various stocks, indices and foreign exchange rates)
 
 
 ## Literature review
