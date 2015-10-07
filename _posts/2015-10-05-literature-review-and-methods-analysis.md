@@ -25,7 +25,7 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 
 <figure>
 	<figcaption>Training and Test Errors for Different SVM Kernels</figcaption>
-	<img src="/assets/week_2/SVM_Kernel.png" width="95%">
+	<center><img src="/assets/week_2/SVM_stock_performance.png" width="95%"></center>
 </figure>
 
 
@@ -63,9 +63,9 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 
 The paper on using GDELT to analyze Singapore's stock proposed a way to convert the features of the GDELT data from categorical data to numerical data. Their approach is as follows: If a column V has categorical data, first find the set of unique categories d = {d1, d2, …, dk}. Then convert this column into k different columns V_1, V_2, …, V_k with one-hot encoding. The data points from each day is aggregated by summing the one-hot encoded vectors. Note that for continuous variable, the one hot encoding represents different bins that the data falls into. Below is a dummy example of the transformations:
 
-<img src="/assets/week_2/GDELT_Original_Format.png" width="60%" align="middle">
-<img src="/assets/week_2/GDELT_One_Hot_Encoding.png" width="90%" align="middle">
-<img src="/assets/week_2/GDELT_Aggregated_by_Date.png" width="90%" align="middle">
+<center><img src="/assets/week_2/GDELT_Original_Format.png" width="60%"></center>
+<center><img src="/assets/week_2/GDELT_One_Hot_Encoding.png" width="90%"></center>
+<center><img src="/assets/week_2/GDELT_Aggregated_by_Date.png" width="90%"></center>
 
 We will use the above feature engineering method to aggregate our data by the day: first converting each line into a one-hot encoded vector, then summing all vectors within the same day to obtain daily statistics. Because this approach will introduce a significant number of dimensions, it is impractical to run this algorithm on all the columns. We will instead focus on a small subset of the columns which are relevant to our purposes:
 
@@ -185,6 +185,26 @@ The regime changing occurs randomly in this model. However, the changing probabi
 * We could also use Double HMM which runs the Markov Chain of the economic states separately which gives the model more degrees of freedom.
 
 ### Kalman Filters:
+
+
+### Support Vector Machines:
+Support Vector Machines (SVM) are a commonly used method for binary classification. Given n data points in a training set:
+
+$$ \mathcal{D} = \left\{ (\mathbf{x}_i, y_i)\mid\mathbf{x}_i \in \mathbb{R}^p,\, y_i \in \{-1,1\}\right\}_{i=1}^n $$
+
+where $$ \mathbf{x}_i $$ is the i-th data point and $$ y_i $$ is its binary label. The goal is to fit a hyperplane
+
+$$ \mathbf{w}\cdot\mathbf{x} - b=0,\, $$
+
+through the data such that the margin between the two sides of the hyperplane 
+$$ \tfrac{2}{\|\mathbf{w}\|} $$ is maximized.
+
+<center><img src="/assets/week_2/SVM_margin.PNG" width="70%"></center>
+
+However, in most cases, the datasets that we work with are not linearly separable. The common approach is to use Kernel SVM to transfer the data points from the original feature space to a higher dimensional nonlinear feature space. The goal is to make the data points linearly separable in the new feature space.
+
+<center><img src="/assets/week_2/SVM_kernels.PNG" width="70%"></center>
+
 
 ## Performance Validation
 
