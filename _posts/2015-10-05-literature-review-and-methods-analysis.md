@@ -149,15 +149,14 @@ A Bayesian Markov Chain Monte Carlo estimation procedure is developed which gene
 #### Lag Length Selection: How many days to go back in history
 The lag length for the VAR(p) model may be determined using model selection criteria. The general approach is to fit VAR(p) models with possible values of p which minimizes some model selection critiera such as Akaike (AIC), Schwarz-Bayesian(BIC) and Hannan-Quinn(HQ) based on the size of the features n and the residual  covariance matrix:
 
-$$\Sigma^~(p)=T^{-1}\sum^T_{t=1}\hat{\epsilon}_t\hat{\epsilon'}_t$$
+$$\Sigma^~(p)=T^{-1}\sum^T_{t=1}\hat{\epsilon}_t\hat{\epsilon}^'_t$$
 
 $$AIC(p)=\ln{|\Sigma^~(p)|}+\frac{2}{T}pn^2$$
 
 $$BIC(p)=\ln{|\Sigma^~(p)|}+\frac{\ln{T}}{T}pn^2$$
 
 $$HQ(p)=\ln{|\Sigma^~(p)|}+\frac{2\ln{\ln{T}}}{T}pn^2$$
-<img src="/assets/week_2/eq2.PNG" width="30%" align="middle">
-<img src="/assets/week_2/eq3.PNG" width="50%" align="middle">
+
 
 ### Hidden Markov Models:
 
