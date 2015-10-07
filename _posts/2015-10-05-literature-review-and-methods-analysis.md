@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Week 2 Literature review and methods analysis"
-description: ""
+description: "Some initial explorations"
 category: class-posts
 tags: [literature review, data]
 ---

@@ -1,7 +1,8 @@
 ---
 layout: page
 title: GDELT+Finance  
-tagline: a COS 513 Project by Ghassen Jerfel, Mikhail Khodak, Zi Xiang Pan and Tom Wu
+tagline: 
+description: a COS 513 Project by Ghassen Jerfel, Zi Xiang Pan and Tom Wu 
 ---    
 ## Past Posts
 
