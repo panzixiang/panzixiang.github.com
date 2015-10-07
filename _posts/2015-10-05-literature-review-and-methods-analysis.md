@@ -26,11 +26,21 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 	- Successes/Improvements: The approach using logistic regression with regularization achieved a test error of 36.1%. A SVM with 3rd degree polynomial kernel achieved a test error of 36.0%. An extension to their work would be to predict the change in price as a continuous variable instead of a binary variable. Training a separate model for each sector might also improve the performance.
 
 - [Using Structured Events to Predict Stock Price Movement: An Empirical Investigation]( http://emnlp2014.org/papers/pdf/EMNLP2014148.pdf)
-- [Stock Prediction Using Event-based Sentiment Analysis](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6690034)
 - [Deep Learning for Event-Driven Stock Prediction](http://ijcai.org/papers15/Papers/IJCAI15-329.pdf)
-	- Key concepts: The Ding et al. deep learning papers use NLP to determine actor pairings along with the connecting action (creating event tuples and later event embeddings) and use various neural network architectures for binary classification.  Generally achieved around 60% classification accuracy, both for individual stocks and indices.
+	- Key concepts: The Ding et al. deep learning papers use natural language processing along with deep learning to perform binary classification on stocks’ movements. First, a structured representation including the subject, action, object, etc is extracted from news articles from Reuters and Bloomberg into a feature vector. Then, Ding et al. experimented with various neural network architectures in the different papers.
 
-- [Predicting the Present With Google Trends](http://people.ischool.berkeley.edu/~hal/Papers/2011/ptp.pdf) 
+	<img src="/assets/week_2/Deep_Learning_for_Stocks.png" width="100%">
+
+	- Successes/Improvements: Their latest architecture achieved 64% accuracy for the S&P 500 index and 65% accuracy for individual stocks. The strength of this architecture is that its model combines the short-term effects and the long-term effects of news on the market. This architecture is as follows: the aggregated event embeddings for each day serve as input to the NN. Events from the current day are treated as short term events; events from the past week are mid-term events; events from the past month are long-term events. There are separate convolution layers for long-term events and mid-term events. The output layer only has two neurons which predicts whether the stock price will go up or go down.
+
+- [Stock Prediction Using Event-based Sentiment Analysis](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6690034)
+
+- [Predicting the Present With Google Trends](http://people.ischool.berkeley.edu/~hal/Papers/2011/ptp.pdf)
+	- Key concepts: Google Trends is an index of the volume of queries that users enter into Google. It measures the total query volume for a particular search term within a particular geographic region relative to the total query volume in that region. Even though it is only available to the public with a weekly granularity, Google Trends data can still provide insights of the current state of the economy. In Predicting the Present with Google Trends, Hal Varian constructed autoregressive models based on Google Trends data in order to infer economic indicators such as automobile sales and number of tourists in the US.
+	- Successes/Improvements: Simple AR models that include relevant Google Trends data tend to outperform models that exclude these data by 5% to 20%. For example, Varian used Google Trends data to augment the simple AR model which could model motor vehicle sales in the US 10.5% better than the original model.
+
+	<img src="/assets/week_2/Motor_Vehicle_Google_Trends.png" width="100%">
+
 - [Stock Prices, News, and Business Conditions](http://www.nber.org/papers/w3520.pdf)
 - [The Three-Pass Regression Filter](http://faculty.chicagobooth.edu/bryan.kelly/research/pdf/Forecasting_theory.pdf)
 - [Visual and Predictive Analyticson Singapore News:Experiments on GDELT, Wikipedia, and ˆSTI](http://arxiv.org/pdf/1404.1996v1.pdf)
