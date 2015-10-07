@@ -109,25 +109,25 @@ for forecasting.
 Let $$Y_t = (y_1, y_2,...,y_nt)'$$ denote an $$(n \times 1)$$ vector of time series variables. The basic p-lag vector autoregressive model (VAR(p)) has the form:
 
 
-<img src="/assets/week_2/eq1" width="50%" align="middle">
+<img src="/assets/week_2/eq1.PNG" width="50%" align="middle">
 
 where $$\Pi_i$$ are $$(n \times n)$$ matrix and $$\epsilon_t$$ is an $$(n \times 1)$$ unobservable zero mean noise vector process.
 
 #### Exogenous Factors in VAR
 To include the exogenous factors into a VAR model (in this case: a vector constructed from our events database), the VAR form can be extended in the following manner:
-<img src="/assets/week_2/eq4" width="50%" align="middle">
+<img src="/assets/week_2/eq4.PNG" width="50%" align="middle">
 
 where $$D_t$$ represents an $$(l \times l)$$ matrix of deterministic components, $$X_t$$ represents an $$(m \times 1)$$ matrix of exogenous variable and $$\Phi$$ and $$G$$ are parameter matrices.
 
 #### Global Events as an Impluse Response in VAR
 Since the contribution of Sims (1980) the interaction between variables and disturbances in VAR models has been best described and interpreted by impluse response functions.
-<img src="/assets/week_2/Impact" width="50%" align="middle">
+<img src="/assets/week_2/Impact.PNG" width="50%" align="middle">
 
 
 #### Lag Length Selection: How many days to go back in history
 The lag length for the VAR(p) model may be determined using model selection criteria. The general approach is to fit VAR(p) models with possible values of p which minimizes some model selection critiera such as Akaike (AIC), Schwarz-Bayesian(BIC) and Hannan-Quinn(HQ) based on the size of the features n and the residual  covariance matrix:
-<img src="/assets/week_2/eq2" width="50%" align="middle">
-<img src="/assets/week_2/eq3" width="50%" align="middle">
+<img src="/assets/week_2/eq2.PNG" width="50%" align="middle">
+<img src="/assets/week_2/eq3.PNG" width="50%" align="middle">
 
 
 
