@@ -179,6 +179,8 @@ The regime changing occurs randomly in this model. However, the changing probabi
 * Another option would be to use Expectation Maximization (EM) to maximize the likelihood of historical returns based on the mixture of Gaussian and discrete Markoc Chain:
  * $$X_t$$ is the state of Mean and variance model at time t.
  * $$R_t$$ is the stock return at time t.
+ 
+ 
  <img src="/assets/week_2/eq10.PNG" width="50%" align="middle">
  * EM seeks to maximise the posterior Likelihood as below:
  <img src="/assets/week_2/eq11.PNG" width="50%" align="middle">
