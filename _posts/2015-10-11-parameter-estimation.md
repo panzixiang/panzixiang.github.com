@@ -15,7 +15,7 @@ We are separating the treatment of event metadata and event impact to generate a
 
 We are aggregating the data rows first by country and then by ActorType1Code and deriving a time series out of them. Each Type will be a regressor and each country will be a vector of types to be fed into VAR. The countries we choose will be the country pair of the exchange rate (for now) and we are assigning different codes to international organizations (UN, EU, NATO etc) to that they have an entity representation.
 
-Sample results
+#### Sample results
 
 USA_20050101 (Country and date)
 
