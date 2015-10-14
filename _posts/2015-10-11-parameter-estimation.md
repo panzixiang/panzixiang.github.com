@@ -69,7 +69,7 @@ where $$ F_T $$ is the exchange rate of day $$ T $$
 
 We use the GBP-USD exchange rates and the GDELT dataset from 2005. Below is the distribution of daily returns of the exchange rates for 2005:
 
-<center><img src="/assets/week_3/DailyReturnHistogram.PNG" width="100%"></center>
+<center><img src="/assets/week_3/DailyReturnHistogram.png" width="100%"></center>
 
 We treat all returns that exceed 0.5% as positive labels and returns that are below -0.5% as negative labels. This give us 75 positive labels and 90 negative labels which form 165 data points in total. We randomly select 70% of the data points as training data and the
 remaining 30% as test data. The experiment is repeated 100 times for each heuristic.
