@@ -132,10 +132,12 @@ We found that 4 regimes had the highest AIC and LogLikelihood. However, we were 
 Therefore, we moved on to use msmFit from the MSwM: Fitting Markov Switching Models package that requires providing a LinearModel (uses EM, see figure for the LikeLihood computation). We then proceeded to evaluate different numbers of regimes that incorporate both the return data and the news data.
 It turns out that having 2 regimes had slightly a higher Log-Likehood with 370 in AIC and a 0.2081 in R-Squared.
 The transition Probabilities were: 
+
 |          |Regime 1 |Regime 2|
 |:---------|:--------|:-------|
 |Regime 1  |0.4866221|0.447077|
 |Regime 2  |0.5133779|0.552923|
+
 <center><img src="/assets/LL.PNG" width="90%"></center>
 
 Note that the original MSBVAR indicated an interesting subset of regimes for the return data without any lags or any exogenous factors but we couldn't confirm because of issues in the package.
