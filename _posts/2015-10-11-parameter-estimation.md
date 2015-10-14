@@ -49,19 +49,21 @@ The end result of the preprocessed data would look like:
 
 We try out a few heuristic functions to map categorical variables onto the real line. The general idea is that we are attenuating the intrinsic type of the event by the number of mentions (articles sources etc.) and we hope that it is immediately verifiable.
 
+We normalize the number of articles/mentions/sources by the mean per day, but we can change that timeframe easily
+
 #### First heuristic
 
-$$ H_1 = NumArticles \times GoldSteinScale $$
+$$ texttt{H_1 = NumArticles(normalized) \times GoldSteinScale} $$
 
 Preliminaries show no linear relationship between regressors and predictors.
 
 #### Second heuristic
 
-$$ H_2 = NumArticles \times AvgTone $$
+$$ texttt{H_2 = NumArticles(normalized) \times AvgTone} $$
 
 #### Third heuristic
 
-$$ H_3 = NumArticles \times QuadClass $$
+$$ texttt{H_3 = NumArticles(normalized) \times QuadClass} $$
 
 <center><img src="/assets/H3.PNG" width="100%"></center>
 
@@ -99,6 +101,8 @@ In a Marjov Switching Model the observed change in a variable between period t a
  on an unobserved state variable $$s_t$$. When $$s_t=1$$, the observed change $$y_t$$ is draw from $$N(\mu_1,\sigma_1^2)$$ and when $$s_t=2$$, the observed change $$y_t$$ is draw from $$N(\mu_2,\sigma_2^2)$$.
  The state variable is then assumed to evolve according to a Markov Chain such that the probability of being in state 1 at time t given that state 1 obtainted at time t-1 equals $$p_{11}$$. Accordingly, we can 
  build a transition matrix.
+
+
 ### Regressors:
 
 The main Time Series of interest is the log return of the Exchange Rate of GBP to USD.
