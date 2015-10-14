@@ -53,17 +53,17 @@ We normalize the number of articles/mentions/sources by the mean per day, but we
 
 #### First heuristic
 
-$$ texttt{H_1 = NumArticles(normalized) \times GoldSteinScale} $$
+$$ \texttt{H_1 = NumArticles(normalized) \times GoldSteinScale} $$
 
 Preliminaries show no linear relationship between regressors and predictors.
 
 #### Second heuristic
 
-$$ texttt{H_2 = NumArticles(normalized) \times AvgTone} $$
+$$ \texttt{H_2 = NumArticles(normalized) \times AvgTone} $$
 
 #### Third heuristic
 
-$$ texttt{H_3 = NumArticles(normalized) \times QuadClass} $$
+$$ \texttt{H_3 = NumArticles(normalized) \times QuadClass} $$
 
 <center><img src="/assets/H3.PNG" width="100%"></center>
 
