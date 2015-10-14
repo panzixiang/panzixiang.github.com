@@ -55,6 +55,7 @@ $$ H_2 = NumArticles \times AvgTone $$
 #### third heuristic
 
 $$ H_3 = NumArticles \times QuadClass $$
+
 <center><img src="/assets/H3.PNG" width="100%"></center>
 
 ## Classification
