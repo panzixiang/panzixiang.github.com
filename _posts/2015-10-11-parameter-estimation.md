@@ -76,11 +76,11 @@ remaining 30% as test data. The experiment is repeated 100 times for each heuris
 
 The table below shows the classification accuracy of running SVM with the different heuristics on the test set:
 
-|Heuristic                | Linear Kernel  | Other Kernels (TBD) |
+|Heuristic                | Linear Kernel  | Gaussian Kernel |
 |:------------------------|:-----------------|:----------------|
-|$$ H_1 = NumArticles \times GoldSteinScale $$ | 51.0%   |      |    
-|$$ H_2 = NumArticles \times AvgTone $$        | 58.4%   |      |
-|$$ H_3 = NumArticles \times QuadClass $$      | 55.9%   |      |
+|$$ H_1 = NumArticles \times GoldSteinScale $$ | 51.0%   | 58.6%   |    
+|$$ H_2 = NumArticles \times AvgTone $$        | 58.4%   | 57.7%   |
+|$$ H_3 = NumArticles \times QuadClass $$      | 55.9%   | 61.1%   |
 
 
 
