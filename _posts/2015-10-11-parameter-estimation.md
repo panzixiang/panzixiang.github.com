@@ -111,9 +111,11 @@ $$R_{t,t+1}=ln(\frac{F_{t+1}}{F_t})$$
 We collected the daily returns (including weekends and holidays) of the exchange rate and multiplied it by 100.
 We then evaluated the MSBVAR R package for Markov Switching Bayesian VAR: It computed Maximum Likelihood estimated for an MSVAR(p,h) where p is the number of lags and h is the number of regimes using EM. However, the package is not well-supported and has issues with p>1. Additionally, no exogenous factors have yet been implemented.
 Therefore, we sought to define our own MS-VAR by first defining a typical AR(p) with lm() or glm().
-For example: VAR(4): Ret[5:350] = Ret[1:346] + Ret[2:347] + Ret[3:348]+ Ret[4:349]
+For example:
+$$VAR(4): Ret[5:350] = Ret[1:346] + Ret[2:347] + Ret[3:348]+ Ret[4:349]$$
 In this case, to include the Exogenous factors, we can simply add them to the forumal with 1-day lag (as indicated by the higher p-values than with 0-lag)
-VARX(4): Ret[5:350] ~ Ret[1:346] + Ret[2:347] + Ret[3:348]+ Ret[4:349] + News_data[4:349]
+
+$$VARX(4): Ret[5:350] ~ Ret[1:346] + Ret[2:347] + Ret[3:348]+ Ret[4:349] + News_data[4:349]$$
 
 ### Model Fit: The Different Heuristics and Variable Selection
 <center><img src="/assets/fig1.PNG" width="100%"></center>
