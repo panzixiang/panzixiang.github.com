@@ -92,7 +92,7 @@ The table below shows the classification accuracy of running kernel SVM with the
 
 If we reduce the cutoff threshold from 0.5% to 0.3%, the performance of Gaussian Kernel SVM on Heuristic 3 drops to 54%.
 
-The next step is to come up with better heuristics that aggregate multiple metrics
+The next step is to come up with better heuristics that aggregate multiple metrics over multiple days.
 
 ## Markov Switching Vector Autoregressive Models
 In a Marjov Switching Model the observed change in a variable between period t and t+1 is assumed to be a random draw from one of two distributions. Which of the two distributions is appropriate depends
