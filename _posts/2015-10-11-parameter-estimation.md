@@ -138,6 +138,14 @@ The transition Probabilities were:
 |Regime 2  |0.5133779|0.552923|
 <center><img src="/assets/week_2/LL.png" width="50%"></center>
 
+Note that the original MSBVAR indicated an interesting subset of regimes for the return data without any lags or any exogenous factors but we couldn't confirm because of issues in the package.
+<center><img src="/assets/week_2/4Reg.png" width="50%"></center>
+We can see in this plot the probabiltiies for the 4 different regims in every day 
+
+<center><img src="/assets/week_2/4R.png" width="50%"></center>
+This plot aggregates them in an ugly way where each regime is colored uniquely.
+
+
 ### Forecasting:
 Using the best fitted model, we can predict the next set of Log returns (whether we're going to use 2 regimes or just 1 will depend on the final implementations of the heuristics).
 Eventually, the plan is to devise a trading strategy out of the news_data and old returns data. 
