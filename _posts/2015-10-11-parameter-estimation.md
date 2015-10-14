@@ -158,7 +158,9 @@ We can see in this plot the probabiltiies for the 4 different regims in every da
 
 <center><img src="/assets/4R.PNG" width="90%"></center>
 This plot aggregates them in an ugly way where each regime is colored uniquely.
-
+The most likely state for each day is as follows (another ugly plot):
+<center><img src="/assets/StateSeq.PNG" width="60%"></center>
+We can see that there are 66 days in state 1, 147 in state 2, 79 in state 3 and 67 in state 4.
 
 ### Forecasting:
 Using the best fitted model, we can predict the next set of Log returns (whether we're going to use 2 regimes or just 1 will depend on the final implementations of the heuristics).
