@@ -136,13 +136,13 @@ The transition Probabilities were:
 |:---------|:--------|:-------|
 |Regime 1  |0.4866221|0.447077|
 |Regime 2  |0.5133779|0.552923|
-<center><img src="/assets/LL.PNG" width="50%"></center>
+<center><img src="/assets/LL.PNG" width="90%"></center>
 
 Note that the original MSBVAR indicated an interesting subset of regimes for the return data without any lags or any exogenous factors but we couldn't confirm because of issues in the package.
-<center><img src="/assets/4Reg.PNG" width="50%"></center>
+<center><img src="/assets/4Reg.PNG" width="90%"></center>
 We can see in this plot the probabiltiies for the 4 different regims in every day 
 
-<center><img src="/assets/4R.PNG" width="50%"></center>
+<center><img src="/assets/4R.PNG" width="90%"></center>
 This plot aggregates them in an ugly way where each regime is colored uniquely.
 
 
