@@ -91,7 +91,7 @@ In a Marjov Switching Model the observed change in a variable between period t a
 
 The main Time Series of interest is the log return of the Exchange Rate of GBP to USD.
 $$R_{t,t+1}=ln(\frac{F_{t+1}}{F_t})$$
-<center><img src="/assets/week_2/GBP-USD.PNG" width="100%"></center>
+<center><img src="/assets/GBP-USD.PNG" width="100%"></center>
 We collected the daily returns (including weekends and holidays) of the exchange rate and multiplied it by 100.
 We then evaluated the MSBVAR R package for Markov Switching Bayesian VAR: It computed Maximum Likelihood estimated for an MSVAR(p,h) where p is the number of lags and h is the number of regimes using EM. However, the package is not well-supported and has issues with p>1. Additionally, no exogenous factors have yet been implemented.
 Therefore, we sought to define our own MS-VAR by first defining a typical AR(p) with lm() or glm().
@@ -100,7 +100,7 @@ In this case, to include the Exogenous factors, we can simply add them to the fo
 VARX(4): Ret[5:350] ~ Ret[1:346] + Ret[2:347] + Ret[3:348]+ Ret[4:349] + News_data[4:349]
 
 ### Model Fit: The Different Heuristics and Variable Selection
-<center><img src="/assets/week_2/fig1.PNG" width="100%"></center>
+<center><img src="/assets/fig1.PNG" width="100%"></center>
 The above figure demonstrates the correlation between the vectors of Heuristic 2 (as explained earlier) and major changes in the exchange rate.
 We can see that for 2005, the main events (spikes in news) were the London Bombings of July 2007 and Hurricane Katrina (last week of August) and the following damage at the start of September 1st.
 
@@ -122,7 +122,7 @@ We ended up with the following new AIC/P-value/R-Square for the following models
 * $$H_2$$: 394.94 AIC and an R-Squared of 0.1218
 * $$H_1$$: 450 AIC and an R-Squared of 0.1079
 $$H_2$$ and $$H_3$$ had really significant p-values which means that even if the R-sqaured value is low, we have statistically significant predictors that can represent the mean change in the response.
-<center><img src="/assets/week_2/ResH3.PNG" width="100%"></center>
+<center><img src="/assets/ResH3.PNG" width="100%"></center>
 
 ### Model Fit: Number of Regimes
 At this point, we decided to go with $$H_2$$ given the great p-value and the potentially moderate R-squared value as well as having the haghest Information Content (from AIC).
@@ -136,13 +136,13 @@ The transition Probabilities were:
 |:---------|:--------|:-------|
 |Regime 1  |0.4866221|0.447077|
 |Regime 2  |0.5133779|0.552923|
-<center><img src="/assets/week_2/LL.PNG" width="50%"></center>
+<center><img src="/assets/LL.PNG" width="50%"></center>
 
 Note that the original MSBVAR indicated an interesting subset of regimes for the return data without any lags or any exogenous factors but we couldn't confirm because of issues in the package.
-<center><img src="/assets/week_2/4Reg.PNG" width="50%"></center>
+<center><img src="/assets/4Reg.PNG" width="50%"></center>
 We can see in this plot the probabiltiies for the 4 different regims in every day 
 
-<center><img src="/assets/week_2/4R.PNG" width="50%"></center>
+<center><img src="/assets/4R.PNG" width="50%"></center>
 This plot aggregates them in an ugly way where each regime is colored uniquely.
 
 
