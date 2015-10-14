@@ -55,7 +55,7 @@ $$ H_2 = NumArticles \times AvgTone $$
 #### third heuristic
 
 $$ H_3 = NumArticles \times QuadClass $$
-
+<center><img src="/assets/week_2/H3.png" width="100%"></center>
 
 ## Classification
 
@@ -82,6 +82,71 @@ The table below shows the classification accuracy of running SVM with the differ
 |$$ H_2 = NumArticles \times AvgTone $$        | 58.4%   | 57.7%   |
 |$$ H_3 = NumArticles \times QuadClass $$      | 55.9%   | 61.1%   |
 
+## Markov Switching Vector Autoregressive Models
+In a Marjov Switching Model the observed change in a variable between period t and t+1 is assumed to be a random draw from one of two distributions. Which of the two distributions is appropriate depends
+ on an unobserved state variable $$s_t$$. When $$s_t=1$$, the observed change $$y_t$$ is draw from $$N(\mu_1,\sigma_1^2)$$ and when $$s_t=2$$, the observed change $$y_t$$ is draw from $$N(\mu_2,\sigma_2^2)$$.
+ The state variable is then assumed to evolve according to a Markov Chain such that the probability of being in state 1 at time t given that state 1 obtainted at time t-1 equals $$p_{11}$$. Accordingly, we can 
+ build a transition matrix.
+### Regressors:
+
+The main Time Series of interest is the log return of the Exchange Rate of GBP to USD.
+$$R_{t,t+1}=ln(\fact{F+{t+1}}{F+t})$$
+<center><img src="/assets/week_2/GBP-USD.png" width="100%"></center>
+We collected the daily returns (including weekends and holidays) of the exchange rate and multiplied it by 100.
+We then evaluated the MSBVAR R package for Markov Switching Bayesian VAR: It computed Maximum Likelihood estimated for an MSVAR(p,h) where p is the number of lags and h is the number of regimes using EM. However, the package is not well-supported and has issues with p>1. Additionally, no exogenous factors have yet been implemented.
+Therefore, we sought to define our own MS-VAR by first defining a typical AR(p) with lm() or glm().
+For example: VAR(4): Ret[5:350] = Ret[1:346] + Ret[2:347] + Ret[3:348]+ Ret[4:349]
+In this case, to include the Exogenous factors, we can simply add them to the forumal with 1-day lag (as indicated by the higher p-values than with 0-lag)
+VARX(4): Ret[5:350] ~ Ret[1:346] + Ret[2:347] + Ret[3:348]+ Ret[4:349] + News_data[4:349]
+
+### Model Fit: The Different Heuristics and Variable Selection
+<center><img src="/assets/week_2/fig1.png" width="100%"></center>
+The above figure demonstrates the correlation between the vectors of Heuristic 2 (as explained earlier) and major changes in the exchange rate.
+We can see that for 2005, the main events (spikes in news) were the London Bombings of July 2007 and Hurricane Katrina (last week of August) and the following damage at the start of September 1st.
+
+Accordingly, we try to fit the separate columns in the heuristic to the time series along with its lagged components using Linear Models or Generalized Linear Models (Gaussian noise).
+We then compare the different Heuristics based on the R-Squared, P-Value and most importantly the AIC values.
+
+|Heuristic                |  R-Squared  | P-Value | AIC |
+|:------------------------|:-----------------|:----------------|:----------------|
+|$$ H_1$$ |  0.2834  |   0.8601  |   531   |
+|$$ H_2$$        |  0.1188    |  1.297e-06    |   457.85 |
+|$$ H_3$$      | 0.4176  |     0.004931   |  459.51  |
+
+These values are discouraging. R-squared values a bit low which implies a weak/moderate correlation between the predictors and the return time series.
+Additionally, $$H_1$$ has a really high P-Value. However, $$H_3$$ has a moderate R-Squared value which indicates a decent correlation in a field as unpredictable as economics.
+However, we cannot fully decide on the heuristics until we pick the most import variables from each.
+Accordingly, we used Step Forward Regression to figure which subset of columns from each heuristic improves the AIC values.
+We ended up with the following new AIC/P-value/R-Square for the following models:
+* $$H_3$$: 370 AIC and an R-Squared of 0.2083
+* $$H_2$$: 394.94 AIC and an R-Squared of 0.1218
+* $$H_1$$: 450 AIC and an R-Squared of 0.1079
+$$H_2$$ and $$H_3$$ had really significant p-values which means that even if the R-sqaured value is low, we have statistically significant predictors that can represent the mean change in the response.
+<center><img src="/assets/week_2/ResH3.png" width="100%"></center>
+
+### Model Fit: Number of Regimes
+At this point, we decided to go with $$H_2$$ given the great p-value and the potentially moderate R-squared value as well as having the haghest Information Content (from AIC).
+We then proceeded to figure the number of regimes that achieves the highest LogLikelihood or AIC.
+Initially, we proceeded with the old MSBVAR package on the return time series alone.
+We found that 4 regimes had the highest AIC and LogLikelihood. However, we were unable to incorporate our news data into any of the MSBVAR functions.
+Therefore, we moved on to use msmFit from the MSwM: Fitting Markov Switching Models package that requires providing a LinearModel (uses EM, see figure for the LikeLihood computation). We then proceeded to evaluate different numbers of regimes that incorporate both the return data and the news data.
+It turns out that having 2 regimes had slightly a higher Log-Likehood with 370 in AIC and a 0.2081 in R-Squared.
+The transition Probabilities were: 
+|          |Regime 1 |Regime 2|
+|:---------|:--------|:-------|
+|Regime 1  |0.4866221|0.447077|
+|Regime 2  |0.5133779|0.552923|
+<center><img src="/assets/week_2/LL.png" width="50%"></center>
+
+Note that the original MSBVAR indicated an interesting subset of regimes for the return data without any lags or any exogenous factors but we couldn't confirm because of issues in the package.
+<center><img src="/assets/week_2/4Reg.png" width="50%"></center>
+We can see in this plot the probabiltiies for the 4 different regims in every day 
+
+<center><img src="/assets/week_2/4R.png" width="50%"></center>
+This plot aggregates them in an ugly way where each regime is colored uniquely.
 
 
+### Forecasting:
+Using the best fitted model, we can predict the next set of Log returns (whether we're going to use 2 regimes or just 1 will depend on the final implementations of the heuristics).
+Eventually, the plan is to devise a trading strategy out of the news_data and old returns data. 
 
