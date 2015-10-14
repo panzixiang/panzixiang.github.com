@@ -63,7 +63,7 @@ $$ H_3 = NumArticles \times QuadClass $$
 ### Binary Classification on the Change in Daily Forex Rates
 The financial instrument that we look at is the foreign exchange rate between British Pounds (GBP) and American Dollars (USD). We attempt to use the GDELT news data up to day $$ T $$ to infer whether prices will go up or go down between day $$ T - 1 $$ and day $$ T $$. The daily return in exchange rate is calculated as:
 
-$$R_{T-1,T}=ln(\frac{F_{T}}{F_{T-1})$$
+$$R_{T-1,T}=ln(\frac{F_{T}}{F_{T-1}})$$
 
 where $$ F_T $$ is the exchange rate of day $$ T $$
 
