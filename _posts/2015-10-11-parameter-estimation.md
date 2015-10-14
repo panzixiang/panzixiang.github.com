@@ -138,7 +138,7 @@ The transition Probabilities were:
 |Regime 1  |0.4866221|0.447077|
 |Regime 2  |0.5133779|0.552923|
 
-<center><img src="/assets/LL.PNG" width="90%"></center>
+<center><img src="/assets/LL.PNG" width="70%"></center>
 
 Note that the original MSBVAR indicated an interesting subset of regimes for the return data without any lags or any exogenous factors but we couldn't confirm because of issues in the package.
 <center><img src="/assets/4Reg.PNG" width="90%"></center>
