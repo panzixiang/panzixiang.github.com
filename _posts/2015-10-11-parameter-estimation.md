@@ -44,18 +44,44 @@ We try out a few heuristic functions to map categorical variables onto the real 
 
 #### first heuristic
 
-NumArticles $$\times$$ GoldSteinScale
+$$ H_1 = NumArticles \times GoldSteinScale $$
 
 Preliminaries show no linear relationship between regressors and predictors.
 
 #### second heuristic
 
-NumArticles $$\times$$ AvgTone
+$$ H_2 = NumArticles \times AvgTone $$
 
 #### third heuristic
 
-NumArticles $$\times$$ QuadClass
+$$ H_3 = NumArticles \times QuadClass $$
 
-### SVM 
+
+## Classification
+
+### Binary Classification on the Change in Daily Forex Rates
+The financial instrument that we look at is the foreign exchange rate between British Pounds (GBP) and American Dollars (USD). We attempt to use the GDELT news data up to day $$ T $$ to infer whether prices will go up or go down between day $$ T - 1 $$ and day $$ T $$. The daily return in exchange rate is calculated as:
+
+$$ r_T = \frac{P_T} {P_{T-1}} - 1 $$
+
+where $$ P_T $$ is the exchange rate of day $$ T $$
+
+
+We use the GBP-USD exchange rates and the GDELT dataset from 2005. Below is the distribution of daily returns of the exchange rates for 2005:
+
+<center><img src="/assets/week_3/DailyReturnHistogram.png" width="100%"></center>
+
+We treat all returns that exceed 0.5% as positive labels and returns that are below -0.5% as negative labels. This give us 75 positive labels and 90 negative labels which form 165 data points in total. We randomly select 70% of the data points as training data and the
+remaining 30% as test data. The experiment is repeated 100 times for each heuristic.
+
+The table below shows the classification accuracy of running SVM with the different heuristics on the test set:
+
+|Heuristic                | Linear Kernel  | Other Kernels (TBD) |
+|:------------------------|:-----------------|:----------------|
+|$$ H_1 = NumArticles \times GoldSteinScale $$ | 51.0%   |      |    
+|$$ H_2 = NumArticles \times AvgTone $$        | 58.4%   |      |
+|$$ H_3 = NumArticles \times QuadClass $$      | 55.9%   |      |
+
+
 
 
