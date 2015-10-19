@@ -100,13 +100,34 @@ def preprocess(raw_data):
             new_indices[pos] = idx
             new_indices[neg] = idx + 1
             idx += 2
+    # keep running averages of numArticles etc in a dictionary indexed by date
+    running_average_data = {}
+    current_day = None
+    count = [0,0,0,0] #NumArticles, NumMentions, NumSources, number of articles in a day
+    for row in filtered_data:
+        # aggregate into individual days
+        if row[_INDICES["SQLDATE"]] != current_day:
+            current_day = row[_INDICES["SQLDATE"]]
+            running_average_data[current_day] = count 
+            count = [int(row[_INDICES["NumArticles"]]),
+                    int(row[_INDICES["NumMentions"]]),
+                    int(row[_INDICES["NumSources"]]),
+                    1]
+        else:
+            count[0]+= int(row[_INDICES["NumArticles"]])   
+            count[1]+= int(row[_INDICES["NumMentions"]])
+            count[2]+= int(row[_INDICES["NumSources"]])
+            count[3]+= 1
+    for day in running_average_data.keys():
+        running_average_data[day] = [day[1]/day[3], day[2]/day[3], day[3]/day[3], day[3]]
 
     processed_data = []
     # The first row to write are the headers
-    new_row = new_columns
+    new_row = new_columns 
     # The current day to process
     current_day = None
     for row in filtered_data:
+        # aggregate into individual days
         if row[_INDICES["SQLDATE"]] != current_day:
             processed_data.append(new_row)
             current_day = row[_INDICES["SQLDATE"]]
@@ -115,11 +136,17 @@ def preprocess(raw_data):
 
         # The heuristics for calculating positive and negative impact are here
 
+        # normalize by the day
+        norm_NumArticles = int(row[_INDICES["NumArticles"]])/running_average_data[current_day][0]
+        norm_NumMentions = int(row[_INDICES["NumMentions"]])/running_average_data[current_day][1]
+        norm_NumSources = int(row[_INDICES["NumSources"]])/running_average_data[current_day][2]
+
+
         # Heuristic 1: NumArticles * Goldstein scale
-        h1 = int(row[_INDICES["NumArticles"]]) * float(row[_INDICES["GoldsteinScale"]])
+        h1 = norm_NumArticles * float(row[_INDICES["GoldsteinScale"]])
 
         # Heuristic 2: NumArticles * AvgTone scale
-        h2 = int(row[_INDICES["NumArticles"]]) * float(row[_INDICES["AvgTone"]])
+        h2 = norm_NumArticles * float(row[_INDICES["AvgTone"]])
 
         def quadclass_impact(quadclass):
             """
@@ -133,9 +160,9 @@ def preprocess(raw_data):
             return quadclass
 
         # Heuristic 3: NumArticles * QuadClass scale
-        h3 = int(row[_INDICES["NumArticles"]]) * float(quadclass_impact(row[_INDICES["QuadClass"]]))
+        h3 = norm_NumArticles * float(quadclass_impact(row[_INDICES["QuadClass"]]))
 
-        h = h2
+        h = h3
 
         country = row[_INDICES["Actor1CountryCode"]]
         # Figure out how many CAMEO codes for the first actor there are
