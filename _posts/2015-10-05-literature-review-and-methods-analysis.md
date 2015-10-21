@@ -38,7 +38,7 @@ We have reviewed a list of papers that explored methods in dealing with the GDEL
 	<img src="/assets/week_2/Deep_Learning_for_Stocks.png" width="100%">
 
 
-- [Stock Prediction Using Event-based Sentiment Analysis](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6690034)
+- [Augmented Functional Time Series Representation and Forecasting with Gaussian Processes](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6690034) by Yoshua Bengio
 
 - [Predicting the Present With Google Trends](http://people.ischool.berkeley.edu/~hal/Papers/2011/ptp.pdf)
 	- Key concepts: Google Trends is an index of the volume of queries that users enter into Google. It measures the total query volume for a particular search term within a particular geographic region relative to the total query volume in that region. Even though it is only available to the public with a weekly granularity, Google Trends data can still provide insights of the current state of the economy. In Predicting the Present with Google Trends, Hal Varian constructed autoregressive models based on Google Trends data in order to infer economic indicators such as automobile sales and number of tourists in the US.
