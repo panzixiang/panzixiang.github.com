@@ -20,20 +20,26 @@ We had three heuristics that can be used to measure the impact which are listed 
 
 #### First heuristic
 
-$$ H_1 = NumArticles(non-normalized) \times GoldSteinScale $$
+$$ H_1 = NumArticles \times GoldSteinScale $$
 
 Preliminaries show no linear relationship between regressors and predictors.
 
 #### Second heuristic
 
-$$ H_2 = NumArticles(non-normalized) \times AvgTone $$
+$$ H_2 = NumArticles \times AvgTone $$
 
 #### Third heuristic
 
-$$ H_3 = NumArticles(non-normalized) \times QuadClass $$
+$$ H_3 = NumArticles \times QuadClass $$
 
-One possible approach is to normalize the number of articles by the total number of articles in the same day. We tried fitting the number of articles within each day
+One possible approach is to normalize the number of articles by the total number of articles in the same day. We tried fitting the number of articles within each day to a Poisson distribution and to a Pareto distribution:
 
+<center><img src="/assets/week_4/num_articles_pareto.png" width="100%"></center>
+
+
+<center><img src="/assets/week_4/num_articles_poisson.png" width="100%"></center>
+
+We can then map the percentile of each data point to a convext function (e.g. quadratic function)
 
 
 ## Gaussian Process Regression
