@@ -125,7 +125,7 @@ However, using auto.arima() kept insisting that the best model would be one with
 ARIMA(2,0,1) model forecast:
 <center><img src="/assets/week_4/201 model.PNG" width="125%"></center>
 <center><img src="/assets/week_4/30MA.PNG" width="125%"></center>
-<center><img src="/assets/week_4/50DayMA.PNG" width="125%"></center>
+<center><img src="/assets/week_4/50Day.PNG" width="125%"></center>
 
 ## Limitations/Possible Improvements:
 The window we use for the training and testing of the autocorrelation of the time series matters a lot since there could besome trends
