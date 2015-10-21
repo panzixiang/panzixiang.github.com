@@ -1,4 +1,9 @@
 import csv
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import minimize
+from scipy.misc import factorial
+
 
 _COUNTRIES_OF_INTEREST = ["USA", "GBR"]
 
@@ -22,6 +27,22 @@ for i in xrange(len(_COLUMNS)):
 
 _EMTPY_CAMEO = "empty"
 
+
+#######################################
+# Helper function for fitting the number of members to a distribution
+######################################
+def poisson(k, lamb):
+    """poisson pdf, parameter lamb is the fit parameter"""
+    return (lamb**k/factorial(k)) * np.exp(-lamb)
+
+def negLogLikelihood(params, data):
+    """ the negative log-Likelohood-Function"""
+    lnl = - np.sum(np.log(poisson(data, params[0])))
+    return lnl
+
+###########################################
+# End of helper function for fitting the number of members to a distribution
+##########################################
 
 def load_csv(filename):
     """
@@ -59,9 +80,22 @@ def new_column_names(country, cameo):
 
 
 def preprocess(raw_data):
+    # Keep a distribution of the numArticles for each day before filtering
+    running_average_data = {}
+    current_day = None
+    # NumArticles, NumMentions, NumSources in a day
+    count = [np.ndarray((0,)), np.ndarray((0,)), np.ndarray((0,))]
+    for row in raw_data:
+        # aggregate into individual days
+        if row[_INDICES["SQLDATE"]] != current_day:
+            current_day = row[_INDICES["SQLDATE"]]
+            running_average_data[current_day] = [[], [], []]
 
-    # TODO: add filtering by country here
+        for i, number in zip([0, 1, 2], [int(row[_INDICES["NumArticles"]]), int(row[_INDICES["NumMentions"]]),
+                                         int(row[_INDICES["NumSources"]])]):
+            running_average_data[current_day][i].append(number)
 
+    # Filtering by country
     filtered_data = []
     for row in raw_data:
         if keep_row(row):
@@ -100,26 +134,7 @@ def preprocess(raw_data):
             new_indices[pos] = idx
             new_indices[neg] = idx + 1
             idx += 2
-    # keep running averages of numArticles etc in a dictionary indexed by date
-    running_average_data = {}
-    current_day = None
-    count = [0,0,0,0] #NumArticles, NumMentions, NumSources, number of articles in a day
-    for row in filtered_data:
-        # aggregate into individual days
-        if row[_INDICES["SQLDATE"]] != current_day:
-            current_day = row[_INDICES["SQLDATE"]]
-            running_average_data[current_day] = count 
-            count = [int(row[_INDICES["NumArticles"]]),
-                    int(row[_INDICES["NumMentions"]]),
-                    int(row[_INDICES["NumSources"]]),
-                    1]
-        else:
-            count[0]+= int(row[_INDICES["NumArticles"]])   
-            count[1]+= int(row[_INDICES["NumMentions"]])
-            count[2]+= int(row[_INDICES["NumSources"]])
-            count[3]+= 1
-    for day in running_average_data.keys():
-        running_average_data[day] = [day[1]/day[3], day[2]/day[3], day[3]/day[3], day[3]]
+
 
     processed_data = []
     # The first row to write are the headers
@@ -137,16 +152,10 @@ def preprocess(raw_data):
         # The heuristics for calculating positive and negative impact are here
 
         # normalize by the day
-        norm_NumArticles = int(row[_INDICES["NumArticles"]])/running_average_data[current_day][0]
-        norm_NumMentions = int(row[_INDICES["NumMentions"]])/running_average_data[current_day][1]
-        norm_NumSources = int(row[_INDICES["NumSources"]])/running_average_data[current_day][2]
+        norm_NumArticles = int(row[_INDICES["NumArticles"]])
+        norm_NumMentions = int(row[_INDICES["NumMentions"]])
+        norm_NumSources = int(row[_INDICES["NumSources"]])
 
-
-        # Heuristic 1: NumArticles * Goldstein scale
-        h1 = norm_NumArticles * float(row[_INDICES["GoldsteinScale"]])
-
-        # Heuristic 2: NumArticles * AvgTone scale
-        h2 = norm_NumArticles * float(row[_INDICES["AvgTone"]])
 
         def quadclass_impact(quadclass):
             """
@@ -158,6 +167,12 @@ def preprocess(raw_data):
             if quadclass in [3, 4]:
                 return -(quadclass - 2)
             return quadclass
+
+        # Heuristic 1: NumArticles * Goldstein scale
+        h1 = norm_NumArticles * float(row[_INDICES["GoldsteinScale"]])
+
+        # Heuristic 2: NumArticles * AvgTone scale
+        h2 = norm_NumArticles * float(row[_INDICES["AvgTone"]])
 
         # Heuristic 3: NumArticles * QuadClass scale
         h3 = norm_NumArticles * float(quadclass_impact(row[_INDICES["QuadClass"]]))
@@ -211,7 +226,6 @@ def write_csv(filename):
 
 if __name__ == '__main__':
     input_file = '/Users/tomwu/Google Drive/COS513 Project Folder/gdelt_2005.csv'
-    input_file = 'gdelt_filtered_2005.csv'
     raw_data = load_csv(input_file)
     processed_data = preprocess(raw_data)
     write_csv('preprocessed_data_2005.csv')
