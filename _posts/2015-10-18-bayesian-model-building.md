@@ -112,20 +112,20 @@ As explained in previous weeks, we trained the model on the log-return data of t
 exchange rates with our best performing heuristic values as an Exogenous variable.
 We eliminated linearly dependent columns in the heuristic matrix first and then added
 it to the ARIMA model.
-<center><img src="/assets/week_4/Residuals.PNG" width="70%"></center>
+<center><img src="/assets/week_4/Residuals.PNG" width="125%"></center>
 
 We sought to find the ARIMA(p,q,d) parameters that minimize our AIC(max log-lik) in order to figure whether our model
 had a moving average, multiple lags or non-stationarity (should be able to discover seasonalit as well). It turned out
 that no smoothing/differntiating was needed (q=0) and that we could have 2 moving averages.
 However, using auto.arima() kept insisting that the best model would be one with only 1 lag and no moving averages 
 (which resulted in lower log-lik from our own optimization).
-<center><img src="/assets/week_4/2MA.PNG" width="70%"></center>
+<center><img src="/assets/week_4/2MA.PNG" width="125%"></center>
 
 ## Testing: Forecast
 ARIMA(2,0,1) model forecast:
-<center><img src="/assets/week_4/201 model.PNG" width="70%"></center>
-<center><img src="/assets/week_4/30MA.PNG" width="70%"></center>
-<center><img src="/assets/week_4/50DayMA.PNG" width="70%"></center>
+<center><img src="/assets/week_4/201 model.PNG" width="125%"></center>
+<center><img src="/assets/week_4/30MA.PNG" width="125%"></center>
+<center><img src="/assets/week_4/50DayMA.PNG" width="125%"></center>
 
 ## Limitations/Possible Improvements:
 The window we use for the training and testing of the autocorrelation of the time series matters a lot since there could besome trends
