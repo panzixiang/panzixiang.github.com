@@ -22,8 +22,6 @@ We had three heuristics that can be used to measure the impact which are listed 
 
 $$ H_1 = NumArticles \times GoldSteinScale $$
 
-Preliminaries show no linear relationship between regressors and predictors.
-
 #### Second heuristic
 
 $$ H_2 = NumArticles \times AvgTone $$
