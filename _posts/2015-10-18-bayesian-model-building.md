@@ -11,12 +11,35 @@ tags: []
 
 ## Improving Heuristics for GDELT Feature Engineering
 
-Section on Pareto/Poisson distribution fitting
+From the previous week, our pre-processing generated numerical data that describes the positive and the negative impact from different actors in the following format:
+
+|Date                | USA_BUS_positive  | USA_BUS_negative | GBR_BUS_positive  | GBR_BUS_negative | ... |
+|:---------------------|:-----------------|:----------------|:-----------------|:----------------|:----------|
+|20050101    | +10.5              |-24.6         | +17.5              |-8.6   | ...      |    
+|20050102    | +25.2              |-16.7         | +15.3              |-9.9  | ... |            
+|...                   |                 |                 |        |                 |     |
+
+We had three heuristics that can be used to measure the impact which are listed below. The problem with using the number of articles is that it is very sensitive to noise. The total number of news articles also varies from day to day.
+
+#### First heuristic
+
+$$ H_1 = NumArticles(non-normalized) \times GoldSteinScale $$
+
+Preliminaries show no linear relationship between regressors and predictors.
+
+#### Second heuristic
+
+$$ H_2 = NumArticles(non-normalized) \times AvgTone $$
+
+#### Third heuristic
+
+$$ H_3 = NumArticles(non-normalized) \times QuadClass $$
+
+One possible approach is to normalize the number of articles by the total number of articles in the same day. We tried fitting the number of articles within each day
+
 
 
 ## Gaussian Process Regression
-
-Section on Gaussian Process
 
 
 

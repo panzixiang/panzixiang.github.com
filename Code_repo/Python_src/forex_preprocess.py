@@ -114,20 +114,25 @@ def preprocess(raw_data):
         num_articles_distributions[date] = [None] * 3
         for i in xrange(len(counts)):
             # TODO: just sort this based on the number of mentions to obtain the percentile
-            result = minimize(negLogLikelihoodPareto,  # function to minimize
+            result = minimize(negLogLikelihoodPoisson,  # function to minimize
                               x0=np.ones(1),     # start value
                               args=(counts[i],),      # additional arguments for function
                               method='Powell',   # minimization method, see docs
                               )
             num_articles_distributions[date][i] = result
+
+            print(result)
             max_count = max(counts[i])
             x_plot = np.linspace(0, max_count, max_count)
             plt.hist(counts[0], bins=np.arange(max_count), normed=True)
-            plt.plot(x_plot, pareto(x_plot, result.x), 'r-', lw=2)
+            plt.plot(x_plot, poisson(x_plot, result.x), 'r-', lw=2)
+            plt.ylabel("GBP-USD exchange rate")
+            plt.xlabel("Number of Articles")
+            plt.title("Fitting the Number of Articles with a Poisson Distribution")
             plt.show()
 
-            print(result)
-        return
+
+            return
 
     # Filtering by country
     filtered_data = []
