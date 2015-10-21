@@ -39,11 +39,10 @@ One possible approach is to normalize the number of articles by the total number
 
 <center><img src="/assets/week_4/num_articles_poisson.png" width="100%"></center>
 
-We can then map the percentile of each data point to a convext function (e.g. quadratic function)
+We can then map the percentile of each data point to a convex function (e.g. quadratic function)
 
 
 ## Gaussian Process Regression
-
 
 
 We performed Gaussian Process Regression on the historical exchange rates between GBP and USD in 2005. In the first image below, we used the first 40 days of 2005 as the training data to predict the next 10 days' exchange rates.
