@@ -1,4 +1,5 @@
 import csv
+import math
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
@@ -35,10 +36,22 @@ def poisson(k, lamb):
     """poisson pdf, parameter lamb is the fit parameter"""
     return (lamb**k/factorial(k)) * np.exp(-lamb)
 
-def negLogLikelihood(params, data):
+def negLogLikelihoodPoisson(params, data):
     """ the negative log-Likelohood-Function"""
     lnl = - np.sum(np.log(poisson(data, params[0])))
     return lnl
+
+
+def pareto(x, alpha, x_m=1):
+    """pareto pdf, parameter alpha is the fit parameter"""
+    return 1.0 * alpha * math.pow(x_m, alpha) / np.array(map(lambda y: math.pow(y, alpha + 1), x))
+
+
+def negLogLikelihoodPareto(params, data):
+    """ the negative log-Likelohood-Function"""
+    lnl = - np.sum(np.log(pareto(data, params[0])))
+    return lnl
+
 
 ###########################################
 # End of helper function for fitting the number of members to a distribution
@@ -81,7 +94,8 @@ def new_column_names(country, cameo):
 
 def preprocess(raw_data):
     # Keep a distribution of the numArticles for each day before filtering
-    running_average_data = {}
+    num_articles_counts = {}
+    num_articles_distributions = {}
     current_day = None
     # NumArticles, NumMentions, NumSources in a day
     count = [np.ndarray((0,)), np.ndarray((0,)), np.ndarray((0,))]
@@ -89,11 +103,31 @@ def preprocess(raw_data):
         # aggregate into individual days
         if row[_INDICES["SQLDATE"]] != current_day:
             current_day = row[_INDICES["SQLDATE"]]
-            running_average_data[current_day] = [[], [], []]
+            num_articles_counts[current_day] = [[], [], []]
 
         for i, number in zip([0, 1, 2], [int(row[_INDICES["NumArticles"]]), int(row[_INDICES["NumMentions"]]),
                                          int(row[_INDICES["NumSources"]])]):
-            running_average_data[current_day][i].append(number)
+            num_articles_counts[current_day][i].append(number)
+
+    for date in num_articles_counts:
+        counts = num_articles_counts[date]
+        num_articles_distributions[date] = [None] * 3
+        for i in xrange(len(counts)):
+            # TODO: just sort this based on the number of mentions to obtain the percentile
+            result = minimize(negLogLikelihoodPareto,  # function to minimize
+                              x0=np.ones(1),     # start value
+                              args=(counts[i],),      # additional arguments for function
+                              method='Powell',   # minimization method, see docs
+                              )
+            num_articles_distributions[date][i] = result
+            max_count = max(counts[i])
+            x_plot = np.linspace(0, max_count, max_count)
+            plt.hist(counts[0], bins=np.arange(max_count), normed=True)
+            plt.plot(x_plot, pareto(x_plot, result.x), 'r-', lw=2)
+            plt.show()
+
+            print(result)
+        return
 
     # Filtering by country
     filtered_data = []
@@ -157,6 +191,8 @@ def preprocess(raw_data):
         norm_NumSources = int(row[_INDICES["NumSources"]])
 
 
+
+
         def quadclass_impact(quadclass):
             """
             Given a quad class, return a measure of its impact
@@ -217,7 +253,7 @@ def preprocess(raw_data):
     return processed_data
 
 
-def write_csv(filename):
+def write_csv(filename, processed_data):
     with open(filename, 'wb') as csvfile:
         writer = csv.writer(csvfile, delimiter='\t')
         for row in processed_data:
@@ -228,8 +264,7 @@ if __name__ == '__main__':
     input_file = '/Users/tomwu/Google Drive/COS513 Project Folder/gdelt_2005.csv'
     raw_data = load_csv(input_file)
     processed_data = preprocess(raw_data)
-    write_csv('preprocessed_data_2005.csv')
-    # write_csv('gdelt_filtered_2005.csv')
+    # write_csv('preprocessed_data_2005.csv', processed_data)
 
 
     print "Finished running"
