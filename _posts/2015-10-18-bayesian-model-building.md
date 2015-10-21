@@ -6,7 +6,57 @@ category:
 tags: []
 ---
 {% include JB/setup %}
+## Improving Heuristics for GDELT Feature Engineering
 
+Section on Pareto/Poisson distribution fitting
+
+
+## Gaussian Process Regression
+
+Section on Gaussian Process
+
+
+
+We performed Gaussian Process Regression on the historical exchange rates between GBP and USD in 2005. In the first image below, we used the first 40 days of 2005 as the training data to predict the next 10 days' exchange rates.
+
+
+<center><img src="/assets/week_4/gaussian_process_40_days.png" width="100%"></center>
+
+In the second image, we used the first 50 days of 2005 as the training data to predict the next 10 days' exchange rates.
+
+<center><img src="/assets/week_4/gaussian_process_50_days.png" width="100%"></center>
+
+In the second image, we used the first 70 days of 2005 as the training data to predict the next 10 days' exchange rates.
+
+<center><img src="/assets/week_4/gaussian_process_70_days.png" width="100%"></center>
+
+
+### Binary classification with Gaussian Process
+
+We use Gaussian Process Regression to frame this as a binary classification problem: use the historical prices to predict the mean of the next day's price:
+
+$$ prediction(T+1) = E[F_{T+1}| F_1, ... , F_T] $$
+
+If the prediction is more than the current price, predict an upward trend; otherwise, predict a downward trend.
+
+The table below shows the classification accuracy of running kernel SVM with the different heuristics on the test set:
+
+|Number of training days         | Best correlation function  | Test accuracy |
+|:------------------------:|:-----------------|:---------------:|
+| 60 | Linear   | 47.0%   |    
+| 30 | Absolute exponential   | 48.0%   |
+| 10 | Absolute exponential  | 48.3%   |
+| 3 | Squared exponential  | 49.7%   |
+
+The next step: to look into how to augment Gaussian Process regression with exogenous inputs. See the paper [Augmented Functional Time Series Representation and Forecasting with Gaussian Processes](http://papers.nips.cc/paper/3324-augmented-functional-time-series-representation-and-forecasting-with-gaussian-processes.pdf) by Yoshua Bengio
+
+Examples of exogenous inputs:
+
+* GDELT news data
+
+* Interest rates
+
+* Inflation rates
 
 ## ARIMA models:
 ARIMA stands for Auto-Regressive Integrated Moving Average. ARIMA models are, in theory, the most general class of 
@@ -53,4 +103,7 @@ ARIMA(2,0,1) model forecast:
 The window we use for the training and testing of the autocorrelation of the time series matters a lot since there could besome trends
 that only show on an inter-day level whereas others are clear on a multi-year scale. Therefore, we need to define our modeling/forecasting
 windows in order to analyze the seasonality/stationarity of the data
+
+
+
 
