@@ -22,8 +22,6 @@ We had three heuristics that can be used to measure the impact which are listed 
 
 $$ H_1 = NumArticles \times GoldSteinScale $$
 
-Preliminaries show no linear relationship between regressors and predictors.
-
 #### Second heuristic
 
 $$ H_2 = NumArticles \times AvgTone $$
@@ -39,7 +37,7 @@ One possible approach is to normalize the number of articles by the total number
 
 <center><img src="/assets/week_4/num_articles_poisson.png" width="100%"></center>
 
-We can then map the percentile of each data point to a convex function (e.g. quadratic function)
+We can then map the number of articles to a percentile using the CDF. Then each percentile can be mapped to a convex function (e.g. quadratic function)
 
 
 ## Gaussian Process Regression
